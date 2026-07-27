@@ -1,0 +1,145 @@
+site_name: mi_core
+site_description: Documentation for mi_core and the mi resources, a FiveM ecosystem by Mamang Irgi.
+site_url: https://luthanirgi.github.io/
+docs_dir: docs
+
+# The header GitHub link points at the profile, not one repo.
+repo_url: https://github.com/luthanirgi
+repo_name: luthanirgi
+edit_uri: ""
+
+# SUMMARY.md is GitBook's navigation file. MkDocs uses the nav below instead, so it is skipped from
+# the MkDocs build (the file stays for GitBook Git Sync).
+exclude_docs: |
+  SUMMARY.md
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  palette:
+    scheme: slate      # dark base; the exact winter_blue hexes come from stylesheets/extra.css
+    primary: black
+    accent: blue
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.instant
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+# Footer icons: GitHub profile, the Tebex store, and PayPal donations.
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/luthanirgi
+      name: GitHub
+    - icon: fontawesome/solid/cart-shopping
+      link: https://luthanirgi.tebex.io/
+      name: Tebex store
+    - icon: fontawesome/brands/paypal
+      link: https://paypal.me/luthanirgi
+      name: Donate on PayPal
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+
+nav:
+  - Home: README.md
+  - mi_core:
+      - Overview: mi_core/README.md
+      - Getting started:
+          - Getting started: mi_core/getting-started/README.md
+          - Installation: mi_core/getting-started/installation.md
+          - Configuration: mi_core/getting-started/configuration.md
+          - Migrating from qbx or qb: mi_core/getting-started/migrating.md
+      - Guides:
+          - Guides: mi_core/guides/README.md
+          - Your first resource: mi_core/guides/first-resource.md
+          - Players and money: mi_core/guides/players-and-money.md
+          - Jobs and gangs: mi_core/guides/jobs-and-gangs.md
+          - Donation refund: mi_core/guides/donation-refund.md
+      - Reference:
+          - Reference: mi_core/reference/README.md
+          - Server exports: mi_core/reference/server-exports.md
+          - Client exports: mi_core/reference/client-exports.md
+          - Events: mi_core/reference/events.md
+          - State, statebags and sync: mi_core/reference/state.md
+          - Commands: mi_core/reference/commands.md
+          - Config: mi_core/reference/config.md
+      - Compatibility, qbx and qb: mi_core/compatibility.md
+  - Resources:
+      - Overview: resources/README.md
+      - Interface:
+          - mi-hud: resources/mi-hud.md
+          - mi-chat: resources/mi-chat.md
+          - mi-radio: resources/mi-radio.md
+          - mi-gps: resources/mi-gps.md
+          - mi-loadingscreen: resources/mi-loadingscreen.md
+          - mi-spawnselector: resources/mi-spawnselector.md
+          - mi-guidebook: resources/mi-guidebook.md
+          - mi-vehmenu: resources/mi-vehmenu.md
+          - mi-scenes: resources/mi-scenes.md
+          - mi-advers: resources/mi-advers.md
+      - Player:
+          - mi-characters: resources/mi-characters.md
+          - mi-appearance: resources/mi-appearance.md
+          - mi-clothing: resources/mi-clothing.md
+          - mi-allcards: resources/mi-allcards.md
+          - mi-documents: resources/mi-documents.md
+          - mi-phone: resources/mi-phone.md
+          - mi-emotes: resources/mi-emotes.md
+          - mi-holster: resources/mi-holster.md
+          - mi-donate: resources/mi-donate.md
+          - mi-newplayer: resources/mi-newplayer.md
+      - Economy and business:
+          - mi-bank: resources/mi-bank.md
+          - mi-billing: resources/mi-billing.md
+          - mi-bossmenu: resources/mi-bossmenu.md
+          - mi-government: resources/mi-government.md
+          - mi-pawnshop: resources/mi-pawnshop.md
+          - mi-dealership: resources/mi-dealership.md
+          - mi-customsgarage: resources/mi-customsgarage.md
+          - mi-garage: resources/mi-garage.md
+          - mi-locker: resources/mi-locker.md
+          - mi-contracts: resources/mi-contracts.md
+          - mi-gacha: resources/mi-gacha.md
+          - mi-poker: resources/mi-poker.md
+          - mi-racingsystem: resources/mi-racingsystem.md
+          - mi-redeem: resources/mi-redeem.md
+      - Jobs and world:
+          - mi-policejob: resources/mi-policejob.md
+          - mi-ambulancejob: resources/mi-ambulancejob.md
+          - mi-damages: resources/mi-damages.md
+          - mi-organs: resources/mi-organs.md
+          - mi-surgery: resources/mi-surgery.md
+          - mi-crutch: resources/mi-crutch.md
+          - mi-drugs: resources/mi-drugs.md
+          - mi-robbery: resources/mi-robbery.md
+          - mi-keys: resources/mi-keys.md
+          - mi-jail: resources/mi-jail.md
+          - mi-dispatch: resources/mi-dispatch.md
+          - mi-report: resources/mi-report.md
+          - mi-housing: resources/mi-housing.md
+          - mi-elevator: resources/mi-elevator.md
+          - mi-queue: resources/mi-queue.md

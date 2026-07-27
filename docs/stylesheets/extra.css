@@ -1,0 +1,103 @@
+/* Winter blue site theme.
+   MkDocs Material has no built-in "winter_blue" colour, so the slate (dark) scheme is retinted here
+   to the same winter_blue palette the resources ship: obsidian-blue surfaces, a #3b82f6 accent. */
+
+:root {
+  --mi-blue: #3b82f6;
+  --mi-blue-bright: #60a5fa;
+  --mi-bg: #0b0f16;
+  --mi-surface: #121826;
+  --mi-surface-2: #1a2233;
+  --mi-border: #2a3448;
+  --mi-text: #eef2f9;
+  --mi-muted: #93a1b5;
+}
+
+/* Accent everywhere (links, active nav, focus) regardless of scheme. */
+:root {
+  --md-accent-fg-color: var(--mi-blue-bright);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 220;
+
+  --md-default-bg-color: var(--mi-bg);
+  --md-default-fg-color: var(--mi-text);
+  --md-default-fg-color--light: #c7d0dd;
+  --md-default-fg-color--lighter: var(--mi-muted);
+  --md-default-fg-color--lightest: #35415a;
+
+  /* Header + primary surfaces read as the obsidian surface, not a flat black. */
+  --md-primary-fg-color: var(--mi-surface);
+  --md-primary-fg-color--light: var(--mi-surface-2);
+  --md-primary-fg-color--dark: var(--mi-bg);
+  --md-primary-bg-color: var(--mi-text);
+  --md-primary-bg-color--light: var(--mi-muted);
+
+  --md-accent-fg-color: var(--mi-blue-bright);
+
+  /* Links and inline code tinted to the accent. */
+  --md-typeset-a-color: var(--mi-blue);
+  --md-code-bg-color: #0e1420;
+  --md-code-fg-color: #dbe2e6;
+
+  --md-footer-bg-color: #090c12;
+  --md-footer-bg-color--dark: #070a0f;
+}
+
+/* The palette's `primary: black` also sets --md-primary-fg-color at the same specificity as the
+   slate block above, so the header can land on Material's near-black instead of our surface. A
+   body-scoped selector (higher specificity) pins the header to the winter surface for good. */
+body[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--mi-surface);
+  --md-primary-fg-color--light: var(--mi-surface-2);
+  --md-primary-fg-color--dark: var(--mi-bg);
+}
+/* Style the header/tabs surface directly, past any palette indirection. */
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: var(--mi-surface);
+  border-bottom: 1px solid var(--mi-border);
+}
+
+/* Sidebar surface + a subtle border between the nav and content. */
+[data-md-color-scheme="slate"] .md-sidebar {
+  background: transparent;
+}
+[data-md-color-scheme="slate"] .md-nav__link--active,
+[data-md-color-scheme="slate"] .md-nav__item .md-nav__link--active {
+  color: var(--mi-blue-bright);
+}
+
+/* The top announce bar (overrides/main.html): a thin winter-blue CTA strip. */
+.mi-announce {
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+.mi-announce a {
+  color: #ffffff;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.mi-announce a:hover {
+  border-bottom-color: #ffffff;
+}
+/* The banner is Material's `.md-banner`, so the winter-blue CTA strip goes there. */
+.md-banner {
+  background: linear-gradient(90deg, var(--mi-blue), #2563eb);
+  color: #ffffff;
+}
+
+/* Code blocks get the surface border so they read as framed cards, matching the resources. */
+[data-md-color-scheme="slate"] .highlight pre,
+[data-md-color-scheme="slate"] .md-typeset pre > code {
+  border: 1px solid var(--mi-border);
+  border-radius: 8px;
+}
+
+/* Tables: quiet header, accent left edge on hover. */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: var(--mi-surface-2);
+  color: var(--mi-text);
+}

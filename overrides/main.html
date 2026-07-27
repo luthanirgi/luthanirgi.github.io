@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+<!-- Top strip: the resources are sold on Tebex and development is funded on PayPal, so both sit at
+     the very top of every page. The GitHub profile link is the header icon (repo_url in mkdocs.yml). -->
+{% block announce %}
+  <div class="mi-announce">
+    Get the mi resources on
+    <a href="https://luthanirgi.tebex.io/" target="_blank" rel="noopener">Tebex</a>
+    &nbsp;&middot;&nbsp;
+    Support development on
+    <a href="https://paypal.me/luthanirgi" target="_blank" rel="noopener">PayPal</a>
+  </div>
+{% endblock %}
