@@ -87,32 +87,62 @@ return {
   },
   defaultDifficulty = 'medium',   -- easy | medium | hard | veryhard | expert | unbelievable
   maxParty     = 6,               -- hard cap on party size (the minimum is always 2)
-  maxSessionMs = 300000,          -- server-side backstop timeout; the client runs the real game clock
   allowAbort   = true,            -- ESC aborts, and counts as a team fail
   sounds       = true,
 
-  devCommand = true,              -- the /coopmg tester
-  devAce     = false,             -- optional ace lock, e.g. 'mi_coopminigames.dev'; false = no ace
-  devRadius  = 25.0,              -- metres the tester reaches to scoop up nearby players
+  -- The clock the party plays against, one row per tier. Longer is easier. It is pushed to every
+  -- game as its `time`, so this is the one place that sets how long a co-op round lasts. The server
+  -- backstop sits 30s past it and can never cut a game short.
+  sessionMs = {
+    easy = 600000, medium = 540000, hard = 480000,
+    veryhard = 420000, expert = 360000, unbelievable = 300000,
+  },
+
+  -- The kit. The only way a player reaches the tester.
+  item = {
+    enabled = true,
+    name    = 'coop_minigame_kit', -- must match the entry you paste into ox_inventory
+    uses    = 8,                   -- rounds per kit; the bar drops 100/uses each time
+  },
+
+  -- Staff way in, with no kit. Two ace strings because they are checked by different things.
+  adminCommand  = 'coopmgdev',
+  adminRestrict = 'group.admin',  -- ox_lib restricted takes the group principal
+  adminAce      = 'admin',        -- a direct IsPlayerAceAllowed takes the bare ace
+
+  partyRadius = 25.0,             -- metres the tester reaches to scoop up nearby players
 }
 ```
 
-!!! warning "Turn the tester off on a live server"
-    `devCommand = true` with `devAce = false` means any player can run `/coopmg` and pull people near them into a round. Set `devCommand = false` before you open the server, or set `devAce` to an ace name and grant it only to your staff.
-
 Per-game tuning is in `shared/config/games.lua`, one block per game per difficulty tier, same shape as [mi_minigame](mi_minigame.md). Both config files are `escrow_ignore`d, so retuning and recolouring needs no rebuild.
+
+## The kit
+
+Players reach the tester by carrying an item, not by typing anything. Paste `setup/ox-items.lua` into `ox_inventory/data/items.lua` and drop `coop_minigame_kit.png` into `ox_inventory/web/images/`.
+
+Using the kit opens the roster. Picking a game gathers everyone standing within `partyRadius` and deals the round. **Only the op who starts it pays**, which is the point: one person brings the job and the rest just have to be there. A use is spent when a round is actually dealt, so browsing and backing out costs nothing.
+
+Whether a round costs a kit is decided server side, never by the client, so firing the event by hand still pays and staff still do not.
+
+A kit handed out with no metadata counts as full and shows no bar until its first round. Give it as `AddItem(src, 'coop_minigame_kit', 1, { durability = 100 })` if you want the bar full from the start.
+
+ox_inventory is optional. Without it the kit has no way to be used and the staff command still works, so the resource starts either way.
 
 ## Commands
 
 | Command | Access | Does |
 | --- | --- | --- |
-| `/coopmg` | everyone, while `devCommand` is on | Browse the roster, pick a game and difficulty, then grab players within `devRadius` |
-| `/coopmg <game> [ids...]` | everyone, while `devCommand` is on | Launch one game directly against the listed server ids |
+| `/coopmgdev` | staff (`adminRestrict`) | Opens the same roster with no kit and no charge |
 
-The server rejects a bad party before dealing it and pushes the reason back to the tester, so a refusal says why instead of looking like nothing happened.
+There is no player command. The old `/coopmg` was a client-side `RegisterCommand`, and a client command cannot be permission-gated at all, so it was open to everyone whenever `devCommand` was left on. The staff one is registered server side through `lib.addCommand`, which can be.
+
+The server rejects a bad party before dealing it and pushes the reason back to the tester, so a refusal says why instead of looking like nothing happened. A refused party is not charged.
+
+!!! note "Two ace strings, on purpose"
+    `adminRestrict` is the group principal (`group.admin`) because that is what ox_lib's `restricted` checks. `adminAce` is the bare ace (`admin`) because that is what a direct `IsPlayerAceAllowed` checks. Swapping them silently denies every real admin.
 
 ## How a session works
 
 The server deals one session with a shared seed and a slot number per player, then waits. Each client renders its own slot from that seed, so what a player sees is derived locally and never carried over the wire. Only signals cross the network, never content: a relay forwards a value to the next or previous player in the ring, capped to primitives and one level of table, so no game can leak the answer to the person who is supposed to ask for it.
 
-A session ends on a team win, a fail, an abort, or the `maxSessionMs` backstop, whichever comes first.
+A session ends on a team win, a fail, an abort, or the server backstop, whichever comes first. The backstop sits 30 seconds past the tier's `sessionMs`, so it can only ever catch a session nothing else closed.

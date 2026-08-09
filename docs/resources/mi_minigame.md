@@ -79,6 +79,17 @@ Config.palettes = {
 Config.defaultDifficulty = 'medium' -- used when a caller passes none or an unknown one
 Config.allowAbort        = true     -- ESC aborts the game and counts as a fail
 Config.sounds            = true     -- tiny WebAudio blips, no asset files
+
+-- The kit. The only way a player reaches the tester.
+Config.item = {
+    enabled = true,
+    name    = 'minigame_kit',       -- must match the entry you paste into ox_inventory
+    uses    = 10,                   -- launches per kit; the bar drops 100/uses each time
+}
+
+-- Staff way in, with no kit.
+Config.adminCommand  = 'minigamedev'
+Config.adminRestrict = 'group.admin'  -- ox_lib restricted takes the group principal
 ```
 
 `shared/games.lua` is the per-game tuning: every game, every difficulty tier, one line each. Omit a game and it uses its built-in defaults; omit one value and only that value falls back. Times are in milliseconds.
@@ -99,15 +110,26 @@ Config.games = {
 
 Both files are `escrow_ignore`d, so retuning and recolouring never needs a rebuild or an unlocked bundle.
 
+## The kit
+
+Players reach the tester by carrying an item, not by typing anything. Paste `setup/ox-items.lua` into `ox_inventory/data/items.lua` and drop `minigame_kit.png` into `ox_inventory/web/images/`.
+
+Using the kit opens the browser of all forty games. One use is granted per use of the item and spent by the next game you launch, so opening the menu and backing out costs nothing. The durability bar drops by `100 / Config.item.uses` each launch, and the kit breaks and disappears when it empties.
+
+A kit handed out with no metadata counts as full and shows no bar until its first launch. Give it as `AddItem(src, 'minigame_kit', 1, { durability = 100 })` if you want the bar full from the start.
+
+ox_inventory is optional. Without it the kit has no way to be used and the staff command still works, so the resource starts either way.
+
 ## Commands
 
 | Command | Access | Does |
 | --- | --- | --- |
-| `/minigame` | everyone | Opens a browser of all forty games, grouped by category |
-| `/minigame <id> [difficulty]` | everyone | Launches one game directly, e.g. `/minigame CylinderAlign expert` |
+| `/minigamedev` | staff (`Config.adminRestrict`) | Opens the same browser with no kit and no charge |
 
-!!! warning "The tester has no permission gate"
-    `/minigame` is registered for every player. It costs nothing and awards nothing, so the worst case is a player looking at a puzzle, but if you would rather it not exist on a live server, remove the `RegisterCommand` block at the bottom of `client/main.lua`.
+There is no player command. The old `/minigame` was a client-side `RegisterCommand`, and a client command cannot be permission-gated at all, so it was open to everyone on the server. The staff one is registered server side through `lib.addCommand`, which can be.
+
+!!! note "It is the group principal, not the bare ace"
+    `Config.adminRestrict` is `group.admin`, not `admin`, because that is what ox_lib's `restricted` checks. A bare ace there silently denies every real admin. (A direct `IsPlayerAceAllowed` wants the opposite; [mi_coopminigames](mi_coopminigames.md) makes one and so carries both strings.)
 
 ## Co-op
 
