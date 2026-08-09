@@ -10,7 +10,7 @@ ensure mi-dispatch
 
 ## Config
 
-`shared/config/` splits into several files. `general.lua` holds the core settings below. `groups.lua` defines the job groups that share a call feed and the dispatcher permissions; `controls.lua` holds the keybinds, the console command, and the player service-call commands; `alerts.lua` defines the automatic alerts and their cooldowns; `apiKeys.lua` holds the FiveManage token and Discord webhook (both blank by default, fill them in yourself); `theme/palettes.lua` holds the colors.
+`shared/config/` splits into several files. `general.lua` holds the core settings below. `groups.lua` defines the job groups that share a call feed and the dispatcher permissions; `controls.lua` holds the keybinds, the console command, and the player service-call commands; `alerts.lua` defines the automatic alerts and their cooldowns; `apiKeys.lua` holds the FiveManage token and Discord webhook (both blank by default, fill them in yourself); `theme/palettes.lua` holds the colors. Two small weapon tables sit beside them: `weapons.lua` maps a weapon hash to the label shown in a shots-fired alert (an unlisted weapon just shows no label), and `blacklistedWeapons.lua` lists the non-lethal and throwable weapons that never raise an alert at all.
 
 ```lua
 return {
@@ -41,26 +41,25 @@ Other resources raise calls through `addCall`. It is available on both the clien
 | --- | --- | --- |
 | `addCall` | `exports['mi-dispatch']:addCall(data)` | Raises a dispatch call to the groups named in `data.jobs`. Server origin is trusted; client origin is rate and distance checked. |
 | `getPlayerData` | `exports['mi-dispatch']:getPlayerData()` | Client only. Returns the caller's local context (street, gender, heading, coords) for building a call. |
-| `panggil` | `exports['mi-dispatch']:panggil(coords, data)` | Server only. Legacy helper that raises a Priority 1 police call at `coords` from `data.Title` / `data.Code` / `data.Message`. |
+| `panggil` | `exports['mi-dispatch']:panggil(coords, data)` | Server only. Short helper that raises a Priority 1 police call at `coords` from `data.Title` / `data.Code` / `data.Message`. |
 
 ## Commands
 
 | Command | Access | Does |
 | --- | --- | --- |
 | `/dispatch`, `/mdt` | everyone | Open the Command Center (CAD/MDT console). Content is shown for members of a dispatch group. |
-| `/911` | everyone | Service call to the police (police, doc) by default. |
-| `/311` | everyone | Service call to the medical service (ambulance) by default. |
-| `/211` | everyone | Service call to Roxwood medical (ambulance2) by default. |
-| `/811` | everyone | Service call to Motion Garage (motiongarage) by default. |
-| `/511` | everyone | Service call to Kerta Garage (mechanic) by default. |
-| `/611` | everyone | Service call to 969 Garage (hpgarage) by default. |
-| `/666` | everyone | Service call to IME Custom Repair (motiongarage) by default. |
-| `/111` | everyone | Service call to the government by default. |
-| `/711` | everyone | Service call to Queen Beach Resto (vito) by default. |
+| `/911` | everyone | Service call to the police (`police`, `doc`) at Priority 2 with code `10-67`. |
 | `mid_toggleHud`, `mid_moveMode`, `mid_nextCall`, `mid_prevCall`, `mid_accept`, `mid_waypoint`, `mid_status`, `mid_panic` | on-duty units | Patrol HUD keybind commands (default keys F6, I, RIGHT, LEFT, UP, DOWN, END, O). Rebind in FiveM key settings. |
 | `midispatch:debugcall` | everyone | Spawns a test call. Only registered when `general.debug = true`. |
 
-The `/911`-style service commands and their target departments come from `Config.controls.serviceCalls` and are buyer-editable.
+Service-call commands come from `controls.serviceCalls`, which ships one entry (`911`) as a worked example. Add a key per dial code you want, naming the departments it pings, its radio code, its priority, the locale key for its title, and the confirmation the caller sees:
+
+```lua
+serviceCalls = {
+    ['911'] = { jobs = { 'police', 'doc' }, code = '10-67', priority = 'Priority 2', title = 'call', notify = 'Message sent to the police department.' },
+    ['311'] = { jobs = { 'ambulance' },     code = '10-52', priority = 'Priority 1', title = 'call', notify = 'Message sent to EMS.' },
+}
+```
 
 ## Statebags
 

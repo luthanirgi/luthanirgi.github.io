@@ -67,7 +67,7 @@ These were dropped. A resource that calls one fails loudly (`No such export ...`
 
 | Export | Side | Why it is gone |
 |---|---|---|
-| `IsPlayerBanned` | server | mi_core never enforced bans on connect. ime uses txAdmin. Wire your own ban check if you need one. |
+| `IsPlayerBanned` | server | mi_core does not enforce bans on connect, txAdmin already does. Wire your own ban check if you need one. |
 | `ExploitBan` | server | same. No built-in ban table. |
 | `IsOptin` / `ToggleOptin` | server | admin report opt-in was not carried over. |
 | `registerHook` / `removeHooks` | server | the core money-hook system was dropped. Note: `exports.ox_inventory:registerHook` is a different, unrelated system and still works. |

@@ -6,7 +6,7 @@ Jump to [Installation](getting-started/installation.md) or [browse the API](refe
 
 ## Why mi_core
 
-* **One framework.** mi_core replaces qbx_core. You run one core, not two. Nothing to clash.
+* **One framework.** You ensure mi_core and nothing else that calls itself a core. Nothing to clash.
 * **Built for 2000 players.** Cached lookups, batched writes, and a save pipeline that has run on a live server. Nothing here is theoretical.
 * **One clean API.** Every framework function is a named export. Server side and client side read the same way, so you never guess.
 * **Security that never false-bans.** The security layer rejects bad actions instead of banning. Suspicion is logged for a human to review, never acted on automatically.
@@ -29,14 +29,19 @@ ensure mi_core
 
 That is the whole thing. There is no qbx_core resource to add. Resources written for qbx_core still work, because mi_core answers their exports under the qbx_core name itself. See [Compatibility](compatibility.md).
 
-The Overextended resources the mi ecosystem builds on are stock. Use the official builds:
+mi_core builds on the Overextended resources. Take these from upstream, they run stock:
 
 * `oxmysql`, [official release](https://github.com/overextended/oxmysql/releases).
 * `ox_lib`, [official release](https://github.com/overextended/ox_lib/releases).
-* `ox_inventory`, [official release](https://github.com/overextended/ox_inventory/releases).
 * `ox_fuel`, [official release](https://github.com/overextended/ox_fuel/releases).
 * `ox_doorlock`, [official release](https://github.com/overextended/ox_doorlock/releases).
-* `ox_target`, [official release](https://github.com/overextended/ox_target/releases).
+
+Two ship inside the bundle with their NUI restyled to match the rest of the mi resources, so use the copies included rather than the upstream download:
+
+* `ox_inventory`, with the mi skin, the crafting panel, and the backpack card. Palette in `data/mi_theme.lua`.
+* `ox_target`, with the reticle and options panel recoloured. Palette in `data/theme.lua`, picked by the `mi:target_palette` convar.
+
+Both keep their upstream exports, events, and item format, so anything written against stock ox_inventory or ox_target works unchanged.
 
 !!! warning "A brain is required"
     If you do not have one, do not use this.

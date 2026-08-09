@@ -1,6 +1,6 @@
 # mi-documents
 
-mi-documents is an in character paperwork tablet: players create documents from job templates, keep their own copies, and hand signed copies to nearby players. It is a React rewrite of qbx_documents on qbx_core, DB-cached for large servers.
+mi-documents is an in character paperwork tablet with a React UI: players create documents from job templates, keep their own copies, and hand signed copies to nearby players. Documents are cached in memory so a busy server reads the database once, not once per open.
 
 ## Install
 
@@ -45,6 +45,8 @@ local Config = {
     jobDocs = require 'shared.config.jobdocs',  -- per-job document templates
 }
 ```
+
+`shared/config/bridge.lua` is the framework bridge. `core` points at `exports.qbx_core`, which mi_core answers to; repoint it (for example at `exports['qb-core']`) to run a different framework. ox_lib and ox_inventory are used directly and are not bridged.
 
 ## Exports
 

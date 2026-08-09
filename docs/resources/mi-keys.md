@@ -2,7 +2,7 @@
 
 mi-keys is vehicle keys, locks, hotwire, lockpick, ped-key robbery, vehicle search, and fake plates in one resource. Keys bind to a vehicle's identity plate, so a key keeps working after a cosmetic plate swap. Fake plates change only the visible plate, not the identity the key checks. It is low on the database (a per-character key store, or ox_inventory key items) and has no NUI.
 
-It is a drop-in replacement: resources written for `qb-vehiclekeys`, `qbx-vehiclekeys`, `qbx_vehiclekeys`, `wasabi_carlock`, or `qbx_fakeplates` resolve to mi-keys through `provide`, so their `exports[...]` calls keep working.
+Resources written for `qb-vehiclekeys`, `qbx-vehiclekeys`, `qbx_vehiclekeys`, `wasabi_carlock`, or `qbx_fakeplates` resolve to mi-keys through `provide`, so their `exports[...]` calls keep working with no edits.
 
 ## Install
 

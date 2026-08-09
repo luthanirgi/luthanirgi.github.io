@@ -54,9 +54,9 @@ These contracts are exposed for other resources (via the manifest `provide` line
 | GetPlayerStatus (server) | `exports['mi-policejob']:GetPlayerStatus(src)` | Returns the player's current status table. |
 | GenerateFingerId (server) | `exports['mi-policejob']:GenerateFingerId()` | Returns a new collision-checked fingerprint id. |
 | SetFakeFingerprint (server) | `exports['mi-policejob']:SetFakeFingerprint(targetSrc, fingerId)` | Overrides a target's fingerprint for the session. |
-| LegacyAddCasingToInventory (server) | `exports['mi-policejob']:LegacyAddCasingToInventory(src, casingId, casingInfo)` | Collects a casing into a player's inventory using the legacy payload shape (`ammolabel`, `serie`), for third parties still calling the legacy casing-collection event. |
-| LegacyAddBlooddropToInventory (server) | `exports['mi-policejob']:LegacyAddBlooddropToInventory(src, bloodId, bloodInfo)` | Same for a blood drop (legacy `dnalabel`, `bloodtype` fields). |
-| LegacyAddFingerprintToInventory (server) | `exports['mi-policejob']:LegacyAddFingerprintToInventory(src, fingerId, fingerInfo)` | Same for a fingerprint (legacy `fingerprint` field). |
+| AddCasingToInventory (server) | `exports['mi-policejob']:AddCasingToInventory(src, casingId, casingInfo)` | Collects a casing into a player's inventory from a `qbx_police`-shaped payload (`ammolabel`, `serie`). Serves the `evidence:server:AddCasingToInventory` event so third-party collectors keep working. |
+| AddBlooddropToInventory (server) | `exports['mi-policejob']:AddBlooddropToInventory(src, bloodId, bloodInfo)` | Same for a blood drop (`dnalabel`, `bloodtype` fields). |
+| AddFingerprintToInventory (server) | `exports['mi-policejob']:AddFingerprintToInventory(src, fingerId, fingerInfo)` | Same for a fingerprint (`fingerprint` field). |
 | grantLicense (server) | `exports['mi-policejob']:grantLicense({ id, license })` | Grants a license to a player. Meant for trusted server code (no permission gate). |
 | ForceFree (server) | `exports['mi-policejob']:ForceFree(src)` | Fully releases any restraint and hood on a player (used on respawn). |
 | GetRestraint (server) | `exports['mi-policejob']:GetRestraint(src)` | Returns the player's current restraint state, or nil. |
@@ -74,7 +74,7 @@ Client, invoked by the radial-menu and inventory-item bridges in `compat/` so ex
 | ToggleCarCam (client) | `exports['mi-policejob']:ToggleCarCam()` | Toggles the in-vehicle dash-cam mode. |
 | OpenBodycamSettings (client) | `exports['mi-policejob']:OpenBodycamSettings()` | Opens the bodycam settings panel (callsign, unit, scale). |
 
-Legacy radial-menu and inventory-item events are bridged to these exports in `compat/`, so existing wheels and items keep working with no edits.
+The radial-menu and inventory-item event names other resources already fire are bridged to these exports in `compat/`, so existing wheels and items keep working with no edits.
 
 ## Statebags
 

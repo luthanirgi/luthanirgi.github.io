@@ -74,7 +74,7 @@ Discord webhook (`apikeys.lua`, shipped blank):
 return { deathWebhook = '' } -- '' disables Discord logging
 ```
 
-Hospital and bed locations live in the `locations` table in `shared/config/shared.lua`.
+Hospital and bed locations live in the `locations` table in `shared/config/shared.lua`. The death-overlay colours are in `shared/config/palettes.lua`: set `PALETTE` to one of `obsidian_rouge`, `winter_blue`, `monochrome`, `twilight_amber`, or `ultramarine_navy`, applied to the NUI at runtime with no rebuild.
 
 ## Exports
 

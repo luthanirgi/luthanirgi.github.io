@@ -1,6 +1,6 @@
 # mi-appearance
 
-mi-appearance is a character appearance editor, drop-in export-compatible with illenium-appearance. It provides the customization NUI plus clothing, barber, tattoo, and plastic-surgeon shops, saved outfits, job and gang uniforms, and the HalfPed head/hands/pants module.
+mi-appearance is a character appearance editor, export-compatible with illenium-appearance. It provides the customization NUI plus clothing, barber, tattoo, and plastic-surgeon shops, saved outfits, job and gang uniforms, and the HalfPed head/hands/pants module.
 
 ## Install
 
@@ -8,7 +8,7 @@ mi-appearance is a character appearance editor, drop-in export-compatible with i
 ensure mi-appearance
 ```
 
-Dependencies (ox_lib, oxmysql, qbx_core, ox_target) are standard. It ships server/migrate.lua, so its tables auto-create on first boot, no manual SQL import. It registers the illenium-appearance export names, so resources that call `exports['illenium-appearance']:*` keep working.
+Dependencies (ox_lib, oxmysql, mi_core, ox_target) are standard. It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import. It registers the illenium-appearance export names, so resources that call `exports['illenium-appearance']:*` keep working.
 
 ## Config
 
@@ -69,7 +69,7 @@ Shop peds and locations, the donation blacklist, the tattoo catalogue, and stati
 
 ## Exports
 
-Client-side, mirroring the illenium-appearance names (drop-in). Main entry points:
+Client-side, under the same names illenium-appearance uses, so existing calls resolve unchanged. Main entry points:
 
 | Export | Signature | What it does |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # mi-robbery
 
-A unified robbery and heist system covering bank and jewelry heists (Fleeca, Paleto, Roxwood, Pacific City, Pacific Roxwood, Vangelico) plus supermarket, ATM, cash exchange, cargo container, laundromart, bobcat, armored truck, vehicle boosting, and a fence pawnshop. A server-wide tiered reservation engine caps how many heists of each tier run at once, checks police on duty, and enforces per-tier cooldowns.
+A unified robbery and heist system covering bank and jewelry heists (Fleeca, Paleto, Roxwood, Pacific City, Pacific Roxwood, Vangelico, Maze Bank) plus supermarket, ATM, cash exchange, cargo container, laundromart, bobcat, armored truck, vehicle boosting, and a fence pawnshop. A server-wide tiered reservation engine caps how many heists of each tier run at once, checks police on duty, and enforces per-tier cooldowns.
 
 ## Install
 
@@ -8,7 +8,7 @@ A unified robbery and heist system covering bank and jewelry heists (Fleeca, Pal
 ensure mi-robbery
 ```
 
-No database: active-heist state lives in GlobalState, so there is nothing to import. It integrates optional externals through config (a dispatch resource, ox_doorlock or qb-doorlock, and a vehicle-keys resource), none of which are hard dependencies.
+No database: active-heist state lives in GlobalState, so there is nothing to import. Hard dependencies are ox_lib and ox_inventory only. Everything else is optional and wired through config (a dispatch resource, ox_doorlock or qb-doorlock, a vehicle-keys resource, [mi_minigame](mi_minigame.md) for the skill checks, and [mi_coopminigames](mi_coopminigames.md) for the Maze Bank co-op stages).
 
 ## Config
 
@@ -44,7 +44,74 @@ return {
 }
 ```
 
-Each location's coordinates, loot, cop requirement, and cooldown live in its own `shared/config/<heist>.lua` (fleeca, paleto, roxwood, pacificcity, pacificroxwood, vangelico, supermarket, atmrobbery, boosting, truck, container, cashexchange, laundromart, bobcat, pawnshop). The Discord log webhook is in `server/apiKeys.lua` (blank before packaging), and the items to add to ox_inventory are listed in `shared/items.lua`.
+Each location's coordinates, loot, cop requirement, and cooldown live in its own `shared/config/<heist>.lua` (fleeca, paleto, roxwood, pacificcity, pacificroxwood, vangelico, mazebank, supermarket, atmrobbery, boosting, truck, container, cashexchange, laundromart, bobcat, pawnshop). The Discord log webhook is in `server/apiKeys.lua` (blank before packaging), and the items to add to ox_inventory are listed in `shared/items.lua`.
+
+`shared/config/minigames.lua` decides which mi_minigame games each heist rolls from and how hard they run:
+
+```lua
+return {
+    enable   = true,           -- false = every heist plays `fallback` instead of rolling
+    fallback = 'ArrowClicker', -- used when rolling is off, or a heist has no pool below
+    noRepeat = true,           -- never roll the same game twice in a row for one heist
+
+    difficulty = { small = 'hard', medium = 'veryhard', large = 'expert' },
+    defaultDifficulty = 'hard', -- heist not listed in `tiers`
+
+    tiers = {                   -- the tier each heist reserves under, server-side
+        atmrobbery = 'small', boosting = 'small', supermarket = 'small',
+        bobcat = 'medium', cashexchange = 'medium', container = 'medium',
+    },
+}
+```
+
+### Maze Bank
+
+`shared/config/mazebank.lua` is the largest location and the only one built around a party. It runs in two halves:
+
+* **Solo stage.** Six ground-floor security terminals, each wanting a `hack_usb`. Any `RequiredSoloPoints` of them (4 by default) opens the co-op half, and surplus terminals go inert once the quota is met.
+* **Three co-op stages, strictly sequential.** Each is a lobby of stations on the floor: members take a station, a countdown arms once `minParty` claim one, and the stage runs a co-op minigame drawn from its `games` pool. Every member pays `requiredItem`, so stage 3 charges four `gold_keycard` from a full party. If `minParty` is never reached, the lobby disbands itself at `lobbyTimeout` and releases the stations.
+
+```lua
+return {
+    label  = 'Maze Bank Heist',
+    type   = 'mazebank',
+    coords = vector3(-1305.92, -802.38, 17.58),
+    size   = 60,
+    enabled = true,
+
+    minCops  = 0,
+    Cooldown = 7200,
+    HackTime = 3,
+
+    RequiredSoloPoints = 4,  -- of the six solo points; set to 6 to require all
+    CompletionBonus = { chance = 40, item = 'gold_keycard', count = 1 }, -- rolled once everything is empty
+
+    soloPoints = {
+        [1] = { coords = vector4(-1305.92, -802.38, 17.58, 0.0), requiredItem = 'hack_usb' },
+        -- ... six in total
+    },
+
+    coopStages = {
+        [1] = {
+            label = 'Security Shutter',
+            doorName = '',              -- optional ox_doorlock name opened on success; '' is skipped
+            requiredItem = 'silver_keycard',
+            minParty = 3,               -- clamped to 2..#stations
+            startDelay = 15,            -- seconds the countdown runs once minParty is reached
+            lobbyTimeout = 120,         -- seconds from the first claim before the lobby disbands
+            games = { 'SplitCipher', 'CoordinateLock', 'BlueprintDiff', 'EliminationGrid', 'ColourConsensus' },
+            stations = { [1] = vector4(-1308.74, -811.84, 17.58, 0.0), --[[ ... ]] },
+        },
+        -- [2] Stairwell Lockdown (thermite), [3] Vault Handshake (gold_keycard, minParty 4)
+    },
+
+    trollys = { --[[ twelve cash trolleys in the vault ]] },
+    lockers = { --[[ ... ]] },
+}
+```
+
+!!! note "Set the trolley headings before you go live"
+    Every `.w` in the shipped file is `0.0`, because the points were captured as `vec3`. The trolley props and the grab and drill synchronized scenes read `.w`, so until you tune them in game all twelve trolleys face the same way.
 
 ## Exports
 
@@ -83,8 +150,7 @@ All are server exports, called as `exports['mi-robbery']:Name(...)`. They are th
 | Command | Access | Does |
 | --- | --- | --- |
 | `/clearrobberies` | group.admin | Force-clears all active robbery slots (admin recovery). |
-| `/resetfleeca [i]`, `/resetpaleto`, `/resetroxwood`, `/resetpacificcity`, `/resetpacificroxwood`, `/resetvang`, `/resetcontainer`, `/resetcashex`, `/resetbobcat`, `/resetlaundro`, `/resetallsupermarket` | police job | Resets that heist's props and active state so it can be run again (some take a location index argument). |
-| `/tutpart1`, `/monyplatedebug`, `/thermitedebug` | everyone | Leftover developer/debug helpers (spawn props, play anims, print coordinates). |
+| `/resetfleeca [i]`, `/resetpaleto`, `/resetroxwood`, `/resetpacificcity`, `/resetpacificroxwood`, `/resetvang`, `/resetmazebank`, `/resetcontainer`, `/resetcashex`, `/resetbobcat`, `/resetlaundro`, `/resetallsupermarket` | police job | Resets that heist's props and active state so it can be run again (some take a location index argument). |
 
 ## Statebags
 

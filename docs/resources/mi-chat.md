@@ -38,6 +38,8 @@ OOC = {
 Gangs = {},
 ```
 
+`shared/config/bridge.lua` is the framework bridge. `core` points at `exports.qbx_core`, which mi_core answers to; repoint it (for example at `exports['qb-core']`) to run a different framework. ox_lib and ox_inventory are used directly and are not bridged.
+
 ## Exports
 
 Both exports are client-side.
@@ -60,16 +62,41 @@ Both exports are client-side.
 | `/clear` | everyone | Clear your own chat window. |
 | `/clearall` | ace `command.clearall` | Clear every player's chat window. |
 | `/joball <text>` | everyone | Server-wide announcement styled by your job or gang. |
-| `/pol <text>` | police or doc, on duty | Police and DOC radio channel. |
-| `/docchat <text>` | doc, on duty | DOC channel. |
-| `/ems <text>` | ambulance, on duty | EMS channel. |
-| `/ems2 <text>` | ambulance2, on duty | Second EMS branch channel. |
-| `/npd <text>` | npdlaw | NPD Law channel. |
-| `/doj <text>` | doj, on duty | DOJ channel. |
-| `/411 <text>` | doj | DOJ-wide channel. |
 | `/adminchat <text>` | ace `support` | Staff admin channel. |
+| `/pol <text>` | police or doc, on duty | Proximity radio for police and DOC, prefixed with the sender's callsign. |
+| `/allpd <text>` | police | The same channel, server-wide instead of proximity. |
 
-The job, announce, and admin channel commands are defined in `shared/config/commands.lua` and can be renamed, removed, or repointed at other jobs.
+Everything below `/clearall` comes from `shared/config/commands.lua`, and the chat's own command suggestions are built from that same file, so a channel you add shows up in the suggestion list and one you delete stops being suggested. Four handler types are available:
+
+```lua
+return {
+  -- nearby: proximity message on a channel (radius from Config.Distance; /me and /do honour Config.Anon)
+  me     = { type = 'nearby', channel = 'me'  },
+  ['do'] = { type = 'nearby', channel = 'do'  },
+  oocl   = { type = 'nearby', channel = 'ooc' },
+
+  -- announce: server-wide broadcast tagged by the sender's job or gang (rate-limited by Config.JoballCooldown)
+  joball = { type = 'announce' },
+
+  -- ace: staff-only channel behind an ace permission
+  adminchat = { type = 'ace', ace = 'support', channel = 'admin' },
+
+  -- jobNearby: proximity message to members of one or more jobs. Full field example:
+  pol = {
+    type       = 'jobNearby',
+    job        = { 'police', 'doc' }, -- one job name, or a list of them
+    onduty     = true,                -- require the sender to be on duty
+    phoneEmote = true,                -- play the 'phone' emote while sending
+    callsign   = true,                -- prefix the sender's callsign
+    -- channel = 'police',            -- optional style key from channels.lua or jobs.lua
+  },
+
+  -- jobAll: like jobNearby, but reaches the whole job server-wide with no distance check
+  allpd = { type = 'jobAll', job = 'police', callsign = true },
+}
+```
+
+Add a `cmd.<name>` entry to `locales/en.json` to give a new channel its own help text in the suggestion list. Without one it falls back to a generic label rather than showing the raw key.
 
 ## Statebags
 

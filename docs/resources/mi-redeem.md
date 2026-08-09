@@ -30,7 +30,7 @@ return {
 }
 ```
 
-Reward kinds (item, money with cash/bank accounts, vehicle) are in `shared/config/rewards.lua`. The NUI palette is in `shared/config/theme.lua` (obsidian_rouge | winter_blue | monochrome | twilight_amber | ultramarine_navy). Optional Discord webhooks (`codeCreated`, `codeRedeemed`) are in `config/apiKeys.lua`, blank by default.
+Reward kinds (item, money with cash/bank accounts, vehicle) are in `shared/config/rewards.lua`. The NUI palette is in `shared/config/theme.lua` (obsidian_rouge | winter_blue | monochrome | twilight_amber | ultramarine_navy). Optional Discord webhooks (`codeCreated`, `codeRedeemed`) are in `config/apiKeys.lua`, blank by default. Every player-facing line the resource can print is in `shared/config/strings.lua`, so translating it is one file.
 
 ## Exports
 

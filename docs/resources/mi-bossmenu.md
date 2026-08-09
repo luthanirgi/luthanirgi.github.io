@@ -1,6 +1,6 @@
 # mi-bossmenu
 
-A boss menu for jobs and gangs with a React UI, plus persistent on-duty totals. Bosses hire, fire, set grades, and review employee duty time. It is a rewrite of qbx_gang built for large player counts. The menu, a toggle-duty prompt, and a paycheck NPC all open through `ox_target`.
+A boss menu for jobs and gangs with a React UI, plus persistent on-duty totals. Bosses hire, fire, set grades, and review employee duty time. Built for servers with large rosters: duty time is tallied in the database, not recomputed by walking the player list. The menu, a toggle-duty prompt, and a paycheck NPC all open through `ox_target`.
 
 ## Install
 

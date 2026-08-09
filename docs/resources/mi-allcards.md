@@ -1,6 +1,6 @@
 # mi-allcards
 
-mi-allcards is an identity and documents system with a React wallet. It issues ID cards and licenses, runs vehicle registration (STNK) and a civil registry (marriage, divorce, household), supports fake IDs and disguises, and does real name changes. Built on qbx_core and kept low-DB for 2000 players.
+mi-allcards is an identity and documents system with a React wallet. It issues ID cards and licenses, runs vehicle registration (STNK) and a civil registry (marriage, divorce, household), supports fake IDs and disguises, and does real name changes. Every read is cached, so a 2000 player server does not pay a query per wallet open.
 
 ## Install
 
@@ -8,7 +8,7 @@ mi-allcards is an identity and documents system with a React wallet. It issues I
 ensure mi-allcards
 ```
 
-Dependencies (oxmysql, ox_lib, qbx_core, ox_inventory) are standard; `/onesync` is a server policy, not a resource to ensure. It ships server/migrate.lua, so its tables auto-create on first boot, no manual SQL import.
+Dependencies (oxmysql, ox_lib, mi_core, ox_inventory) are standard; `/onesync` is a server policy, not a resource to ensure. It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import.
 
 ## Config
 
@@ -50,7 +50,7 @@ return {
 }
 ```
 
-Name change (`shared/config/namechange.lua`). Consumes one item and rewrites real charinfo:
+Name change (`shared/config/namechange.lua`). Consumes one item and overwrites the real charinfo:
 
 ```lua
 return {
@@ -67,7 +67,35 @@ return {
 }
 ```
 
-The card and license catalogue, badges, the photo booth, the fake-ID quiz, and disguise data live in the other `shared/config/*.lua` modules (`cards.lua`, `badges.lua`, `booth.lua`, `fakeid.lua`, `quiz.lua`), which are larger data tables.
+The card and license catalogue, badges, the photo booth, the fake-ID quiz, and disguise data live in the other `shared/config/*.lua` modules (`cards.lua`, `badges.lua`, `booth.lua`, `fakeid.lua`, `quiz.lua`), which are larger data tables. Wallet colours are in `theme.lua`.
+
+Testing (`shared/config/testing.lua`) is the `/giveallcards` helper. Leave `enabled = true` while you set the resource up and the command hands a player one of every registered document at once; set it to `false` on a live server and the command is never registered.
+
+```lua
+return {
+    enabled    = true,
+    command    = 'giveallcards', -- /giveallcards [id]  (no id = yourself)
+    restricted = 'group.admin',  -- ox_lib restricted takes the GROUP principal, not the bare ace
+
+    skipDuplicates = true, -- do not re-issue a document the target already holds
+    grantLicenses  = true, -- also flag the police licenses those cards grant
+    giveWalletItem = true, -- hand over Config.walletItem as well
+
+    exclude = {},          -- card types to skip, e.g. { fake_id = true }
+
+    -- Placeholder photo stamped on every test card. '' = no photo: the wallet faces fall back
+    -- to an icon, but an id-face card cannot be SHOWN to another player without one.
+    mugShot = '',
+
+    -- Dummy values for documents that normally come from samsat / the civil registry.
+    sample  = { plate = 'MI44RGI', vehicleModel = 'sultanrs', vehicleColor = 'Midnight Black',
+                spouseName = 'Jane Doe', witnessName = 'Officer Smith' },
+
+    -- Persona minted onto the test fake_id; using that item flips you into this identity.
+    persona = { firstname = 'John', lastname = 'Smith', birthdate = '01/01/1990',
+                sex = 'Male', nationality = 'American', citizenid = 'FK00001' },
+}
+```
 
 ## Exports
 
@@ -98,8 +126,9 @@ All server-side unless noted. Other resources verify cards, read identity, and i
 | --- | --- | --- |
 | `/wallet` | everyone | Open the ID wallet UI |
 | `/divorce` | everyone | File for divorce from the civil registry |
+| `/giveallcards [id]` | group.admin | Hand a player (or yourself) every registered document. Only registered while `testing.enabled` is true. |
 
-Both command names are configurable (`Config.walletCommand`, `Config.registry.divorceCommand`).
+The first two command names are configurable (`Config.walletCommand`, `Config.registry.divorceCommand`), the third is `Config.testing.command`.
 
 ## Statebags
 

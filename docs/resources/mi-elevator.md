@@ -31,6 +31,8 @@ return {
 }
 ```
 
+The NUI palette is in `shared/config/theme.lua`: set `PALETTE` to one of `obsidian_rouge`, `winter_blue`, `monochrome`, `twilight_amber`, or `ultramarine_navy`, or hand-edit the colours. It is pushed to the NUI on open, so recolouring needs no rebuild.
+
 Lifts themselves are defined in `shared/config/elevators.lua`. Each entry looks like:
 
 ```lua

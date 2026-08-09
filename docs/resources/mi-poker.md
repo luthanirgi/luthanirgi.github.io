@@ -29,7 +29,7 @@ minBuyInBB  = 20,              -- min buy-in = 20 * big blind
 maxBuyInBB  = 100,             -- max buy-in = 100 * big blind
 seatCount   = 5,
 showdownLingerMs = 4000,       -- pause on the result before the next hand
-cageReclaimOnLoad = false,     -- keep off until legacy chip values are migrated to items
+cageReclaimOnLoad = false,     -- turn on only once every chip on the server is an inventory item
 ```
 
 Table locations are in `shared/config/tables.lua` (24 tables across the casino floor and basement):

@@ -65,7 +65,7 @@ The palette is chosen in `shared/config/theme.lua` (`theme.resolve()` feeds the 
 | --- | --- | --- |
 | openRacingTablet (client) | `exports['mi-racingsystem']:openRacingTablet()` | Opens the racing tablet NUI for the calling player. |
 
-The manifest also declares the race-control server exports (`startRaceByTrackId`, `joinRaceById`, `joinRaceByIdPassenger`, `leaveRaceByRaceId`, `getTrackStartCoordsById`, `onFinished`, `removeOnFinished`) for drop-in compatibility. The resource also provides `mi_racing`.
+The manifest also declares the race-control server exports (`startRaceByTrackId`, `joinRaceById`, `joinRaceByIdPassenger`, `leaveRaceByRaceId`, `getTrackStartCoordsById`, `onFinished`, `removeOnFinished`) so resources already calling those names resolve straight into mi-racingsystem. The resource also provides `mi_racing`.
 
 ## Commands
 

@@ -54,6 +54,8 @@ local Config = {
 
 `Config.KeysResource` names the vehicle-keys resource used on delivery. It is guarded, so a missing or renamed resource is a no-op instead of an error.
 
+`shared/config/bridge.lua` is the framework bridge. `core` points at `exports.qbx_core`, which mi_core answers to; repoint it (for example at `exports['qb-core']`) to run a different framework. ox_lib and ox_inventory are used directly and are not bridged.
+
 ## Exports
 
 | Export | Signature | What it does |

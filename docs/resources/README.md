@@ -16,6 +16,7 @@ Every resource assumes mi_core is already running. Load them after it in `server
 * [mi-vehmenu](mi-vehmenu.md) vehicle menu
 * [mi-scenes](mi-scenes.md) 3D world text
 * [mi-advers](mi-advers.md) billboards and screens
+* [mi-polaroid](mi-polaroid.md) in character camera, prints, and albums
 
 ## Player
 
@@ -64,3 +65,13 @@ Every resource assumes mi_core is already running. Load them after it in `server
 * [mi-housing](mi-housing.md) housing
 * [mi-elevator](mi-elevator.md) elevators
 * [mi-queue](mi-queue.md) connection queue
+
+## Minigames
+
+* [mi_minigame](mi_minigame.md) forty single-player minigames behind one export
+* [mi_coopminigames](mi_coopminigames.md) thirty minigames for two to six players
+* [mi_coopdemo](mi_coopdemo.md) a worked integration of the co-op games
+
+## Tools
+
+* [mi-scenetool](mi-scenetool.md) place synchronized scenes and capture their coordinates

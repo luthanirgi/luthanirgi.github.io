@@ -17,7 +17,7 @@ Owner-editable settings live in `shared/config/*.lua`.
 `shared/config/settings.lua`:
 
 ```lua
-platePattern    = 'IME 1111',      -- random-plate mask
+platePattern    = 'MI 1111',       -- random-plate mask: 1 = digit, A = letter, . = either
 defaultDistance = 10.0,
 defaultGarage   = 'luxgarage',     -- where givecar vehicles land when no garage is given
 
@@ -39,8 +39,18 @@ insurance = {
 },
 
 police = {
-    holdMinutes = 60,          -- default police-impound hold (minutes) before release
-    releaseFine = 2500,        -- bank fine to release a police-impounded vehicle
+    holdMinutes = 60,          -- fallback hold (minutes) when a script seizes without naming one
+    releaseFine = 2500,        -- fallback release fine when a seizure did not set its own
+    -- /seize popup bounds. The officer picks hold and fine per seizure; the server clamps
+    -- to these and never trusts the raw input.
+    seize = {
+        presets        = { 15, 30, 60, 180, 720 }, -- one-tap hold durations, in minutes
+        minMinutes     = 5,
+        maxMinutes     = 10080,    -- 7 days
+        defaultMinutes = 60,
+        defaultFine    = 2500,
+        maxFine        = 50000,
+    },
     jobs = { police = 0 },     -- jobs (name -> min grade) allowed at the Police Impound lot
 },
 
@@ -53,11 +63,35 @@ fuel = {
 
 classes = { all = {...}, car = {...}, air = {15,16}, sea = {14}, rig = {...}, emergency = {18,19} },
 
-gangSlotLimits  = { gangbmc = 6, gangboa = 6, gangnmc = 4 }, -- per-gang shared garage slot caps
+-- per-member cap in a gang garage; first hit wins: entry.slots, limits[garageKey],
+-- limits[gangName], then gangSlotDefault. One worked example, add your own gangs.
+gangSlotLimits  = { godfathers = 10 },
 gangSlotDefault = 2,
 ```
 
-`shared/config/garages.lua` defines every garage location (label, type, coords, spawns, blip). UI colours are in `shared/config/theme.lua` (`winter_blue` by default; presets `obsidian_rouge`, `winter_blue`, `monochrome`, `twilight_amber`, `ultramarine_navy`).
+`shared/config/garages.lua` defines every garage location (label, type, coords, spawns, blip).
+
+`shared/config/rentals.lua` is the job motor pool. A garage entry with `type = 'rental'` hands out fleet vehicles instead of the player's own: a rental never touches `player_vehicles`, it exists only while it is out, and returning it refunds `refund` of the deposit. The fleet a player sees is picked by their job, so one rental point can serve several services.
+
+```lua
+account        = 'bank',      -- account the deposit is taken from and refunded to
+platePattern   = 'RENT1111',
+refund         = 0.75,        -- share of the deposit paid back on return
+maxActive      = 1,           -- vehicles one player may have on rent at once
+returnAnywhere = true,        -- false = a rental must go back to the point it came from
+
+jobs = {
+    police = {
+        label = 'Police motor pool',
+        vehicles = {          -- grade is the MINIMUM job grade that may take the vehicle
+            { model = 'police',  label = 'Cruiser',     deposit = 500, grade = 0 },
+            { model = 'police2', label = 'Interceptor', deposit = 750, grade = 1 },
+        },
+    },
+},
+```
+
+UI colours are in `shared/config/theme.lua` (`winter_blue` by default; presets `obsidian_rouge`, `winter_blue`, `monochrome`, `twilight_amber`, `ultramarine_navy`).
 
 ## Exports
 

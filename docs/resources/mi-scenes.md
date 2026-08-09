@@ -35,3 +35,7 @@ return {
 ```
 
 The UI palette is chosen in `shared/config/colors.lua` by setting `PALETTE` to one of `obsidian_rouge`, `winter_blue`, `monochrome`, `twilight_amber`, or `ultramarine_navy`. It applies at runtime, so a re-skin needs no web rebuild.
+
+`shared/config/backgrounds.lua` is the list of background styles offered when a scene is created (`none`, the `Tall*` sizes, `Blood` through `Blood5`, `Brush`, `Chain`, the metals, the gradients, the note papers, and `Spray`). Trim it to the ones you want players choosing from.
+
+`shared/config/bridge.lua` is the framework bridge. `core` points at `exports.qbx_core`, which mi_core answers to; repoint it (for example at `exports['qb-core']`) to run a different framework.

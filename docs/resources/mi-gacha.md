@@ -52,7 +52,30 @@ enabled     = false,  -- master switch for the rig feature (console + NUI panel 
 logTriggers = true,   -- audit-log to Discord whenever a rigged roll fires
 ```
 
-`shared/config/machines.lua` sets the in-world showroom locations (map blip plus a lazily-spawned ox_target attendant ped); leave `locations` empty to make it command-only. `shared/config/npcs.lua` sets the recycle drop-off NPC locations. The large data tables are the rollable cases in `cases.lua` and the recyclable catalog in `recyclables.lua`.
+`shared/config/grades.lua` is the points table the exchange runs on. An item's points come from its grade, taken from a recyclable's `grade` or a case item's `rarity`, and an unknown grade falls back to `defaultGrade`:
+
+```lua
+scrap     = { label = 'Scrap',     points = 1,  color = '#8a8f98' },
+common    = { label = 'Common',    points = 2,  color = '#9aa0a8' },
+uncommon  = { label = 'Uncommon',  points = 4,  color = '#7f9a6d' },
+rare      = { label = 'Rare',      points = 8,  color = '#6d86ad' },
+mythical  = { label = 'Mythical',  points = 16, color = '#9a7fb0' },
+legendary = { label = 'Legendary', points = 34, color = '#cba063' },
+```
+
+`shared/config/keyexchange.lua` is the Key Exchange venue, where coupons become keys:
+
+```lua
+enabled          = true,          -- false = no blip, no ped, no target; command or event only
+ped              = 'ig_andreas',  -- attendant model, or false to target the spot itself
+spawnDistance    = 25.0,
+interactDistance = 2.5,           -- ox_target reach, and the target radius when ped = false
+label            = 'Key Exchange',
+blip             = { sprite = 617, color = 2, scale = 0.8, label = 'Key Exchange' }, -- false for none
+locations        = { vec4(-50.2327, 1911.1080, 195.7054, 97.1408) },
+```
+
+`shared/config/machines.lua` sets the in-world showroom locations (map blip plus a lazily-spawned ox_target attendant ped); leave `locations` empty to make it command-only. The large data tables are the rollable cases in `cases.lua` and the recyclable catalog in `recyclables.lua`.
 
 ## Commands
 

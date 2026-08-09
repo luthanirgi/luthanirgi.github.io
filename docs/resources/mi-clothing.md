@@ -25,6 +25,8 @@ showProps = true,        -- hat, glasses, ear, watch, bracelet
 hairCommand = false,     -- enable the /hair [id] command
 ```
 
+`shared/config/bridge.lua` names the resources this one reaches into. `medicalResource` is the medical script consulted before a clothing change (`qbx_medical` by default, which mi-ambulancejob provides; `false` disables the check). The call is guarded, so with no medical resource clothing stays usable. ox_lib and ox_inventory are used directly and are not bridged.
+
 ## Commands
 
 | Command | Access | Does |

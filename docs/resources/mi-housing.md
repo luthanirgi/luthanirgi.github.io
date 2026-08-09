@@ -52,6 +52,10 @@ Config.CCTV = {
 }
 ```
 
+`shared/config/bridge.lua` is the integration bridge: `core` points at `exports.qbx_core`, which mi_core answers to, and `banking` at your banking resource. Repoint either to run a different framework. ox_lib and ox_inventory are used directly and are not bridged.
+
+`shared/config/colors.lua` is the NUI palette: set `PALETTE` to one of `obsidian_rouge`, `winter_blue`, `monochrome`, `twilight_amber`, or `ultramarine_navy`, or hand-edit one. It applies live, with no rebuild.
+
 ## Exports
 
 Server:
@@ -87,4 +91,4 @@ The bundled `client/freecam/` camera library also registers the standard freecam
 | `/bikinkos` | group.admin or real-estate agent | Opens the create new property or apartment building flow. |
 | `/manageproperty` | group.admin | Opens the property and apartment management dashboard. |
 | `/setpropertygarage [property_id]` | everyone (property owner) | Sets that property's garage access point at your current position (run outside, optionally seated in a vehicle). |
-| `/convertbcshousing` | server console only | One-off importer that migrates legacy bcs_housing data (`house`, `house_owned`) into mi-housing tables. |
+| `/convertbcshousing` | server console only | One-off importer that reads the bcs_housing tables (`house`, `house_owned`) and writes them into the mi-housing tables. |

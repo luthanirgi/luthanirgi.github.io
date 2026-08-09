@@ -47,7 +47,7 @@ Run from the server console, not by players. Both are one-off cleanups.
 | Command | Does |
 |---|---|
 | `cleanplayergroups` | purge `player_groups` rows for jobs or gangs that no longer exist |
-| `convertjobs` | migrate legacy `players.job` and `players.gang` JSON into `player_groups` |
+| `convertjobs` | read the `players.job` and `players.gang` JSON columns and write them into `player_groups` |
 
 ## Setting up the groups
 

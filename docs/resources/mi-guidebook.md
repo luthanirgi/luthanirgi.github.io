@@ -14,6 +14,14 @@ It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL 
 
 Owner settings live in `shared/config/general.lua`. Theme palettes and locale strings sit in `shared/config/theme` and `shared/config/locales`.
 
+`shared/config/permissions.lua` decides who may edit the handbook. It is checked server-side on every write, and reading stays open to everyone. The ace goes through the core's `HasPermission`, so use the short name, not `group.admin`:
+
+```lua
+return { ace = 'admin' }   -- grant with: add_ace group.editor admin allow
+```
+
+`shared/config/seed.lua` is the starter handbook, written to the database once while it is empty and then owned by whoever edits it in game. Content is markdown (`##`, `-`, `**bold**`, `>` callout). One category and one article ship as a worked example, copy them and add your own.
+
 ```lua
 return {
     -- Command players type to open the handbook.

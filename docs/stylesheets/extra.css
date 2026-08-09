@@ -101,3 +101,104 @@ body[data-md-color-scheme="slate"] {
   background: var(--mi-surface-2);
   color: var(--mi-text);
 }
+
+/* ==================================================================== playable demos
+   The resource pages for mi_minigame and mi_coopminigames embed the resource's real NUI build in an
+   iframe (docs/demos/, refreshed by tools/sync-demos.ps1). It mounts on click rather than on page
+   load: a cold iframe has no keyboard focus, so SPACE and the arrows would scroll this page instead
+   of reaching the game, and a click is what hands focus over. */
+.mi-demo {
+  position: relative;
+  margin: 1.4rem 0;
+  border: 1px solid var(--mi-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #06070b;
+  height: var(--mi-demo-h, 620px);
+}
+.mi-demo iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Co-op renders every seat side by side, and reading a teammate's pane IS the demo, so it breaks
+   out of the content column. Margin maths rather than a transform: a transformed ancestor makes the
+   iframe its own containing block and Chrome renders the contents soft. */
+.mi-demo.wide {
+  width: min(94vw, 1480px);
+  margin-left: calc(50% - min(47vw, 740px));
+}
+
+/* A <button> rather than a div, so the control that starts the demo is reachable by keyboard too.
+   Hence the reset on the first four lines. */
+.mi-demo-cover {
+  appearance: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  background:
+    radial-gradient(680px 340px at 50% 34%, rgba(59, 130, 246, 0.13), transparent 70%),
+    var(--mi-bg);
+  transition: background 0.15s;
+}
+.mi-demo-cover:hover {
+  background:
+    radial-gradient(680px 340px at 50% 34%, rgba(59, 130, 246, 0.2), transparent 70%),
+    var(--mi-bg);
+}
+.mi-demo.playing .mi-demo-cover {
+  display: none;
+}
+.mi-demo-play {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--mi-text);
+}
+.mi-demo-sub {
+  max-width: 34rem;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--mi-muted);
+}
+.mi-demo-badge {
+  margin-bottom: 0.35rem;
+  padding: 0.34rem 0.7rem;
+  border: 1px solid var(--mi-blue);
+  border-radius: 999px;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--mi-blue-bright);
+  background: rgba(59, 130, 246, 0.1);
+}
+/* Escape hatch for a narrow screen, where the embed is too cramped to be worth playing. */
+.mi-demo-full {
+  font-size: 0.7rem;
+  color: var(--mi-muted);
+}
+
+@media screen and (max-width: 76.1875em) {
+  .mi-demo.wide {
+    width: auto;
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 44.9375em) {
+  .mi-demo {
+    height: 460px;
+  }
+}

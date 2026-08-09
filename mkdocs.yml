@@ -38,6 +38,11 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+# Mounts the playable demo iframes on the two minigame pages. Their builds sit in docs/demos/ and are
+# refreshed from the resources by tools/sync-demos.ps1.
+extra_javascript:
+  - javascripts/demo.js
+
 # Footer icons: GitHub profile, the Tebex store, and PayPal donations.
 extra:
   social:
@@ -101,6 +106,7 @@ nav:
           - mi-vehmenu: resources/mi-vehmenu.md
           - mi-scenes: resources/mi-scenes.md
           - mi-advers: resources/mi-advers.md
+          - mi-polaroid: resources/mi-polaroid.md
       - Player:
           - mi-characters: resources/mi-characters.md
           - mi-appearance: resources/mi-appearance.md
@@ -143,3 +149,9 @@ nav:
           - mi-housing: resources/mi-housing.md
           - mi-elevator: resources/mi-elevator.md
           - mi-queue: resources/mi-queue.md
+      - Minigames:
+          - mi_minigame: resources/mi_minigame.md
+          - mi_coopminigames: resources/mi_coopminigames.md
+          - mi_coopdemo: resources/mi_coopdemo.md
+      - Tools:
+          - mi-scenetool: resources/mi-scenetool.md
