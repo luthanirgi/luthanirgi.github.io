@@ -66,6 +66,34 @@ return {
 }
 ```
 
+### Every location
+
+Each location is one file in `shared/config/`, so tuning one score never touches another. They all carry the same four knobs: `enabled`, `minCops` (officers on duty before it can start), `Cooldown` (seconds before that location can run again), and `CompletionBonus` (a list, rolled once the location is emptied).
+
+| File | Location | Tier | Cops | Cooldown | Completion bonus |
+|---|---|---|---|---|---|
+| `atmrobbery.lua` | ATM | small | 2 | 1 h | `special_metal` x1 |
+| `boosting.lua` | Vehicle boosting | small | 2 | 15 min | `special_metal` x1 |
+| `supermarket.lua` | Supermarket | small | 8 | 1 h | `special_metal` x1 |
+| `truck.lua` | Armored truck | default | 3 | 1 h 30 | `special_metal` x2 |
+| `bobcat.lua` | Bobcat Security | medium | 15 | 1 h 30 | `red_keycard` 50%, `special_metal` x3 |
+| `cashexchange.lua` | Cash Exchange | medium | 15 | 1 h 30 | `blue_keycard` 60%, `special_metal` x2 |
+| `container.lua` | Cargo container | medium | 15 | 1 h 30 | `blue_keycard` 60%, `special_metal` x2 |
+| `fleeca.lua` | Fleeca | medium | 15 | 1 h 30 | `purple_keycard` 45%, `special_metal` x3 |
+| `laundromart.lua` | Laundromat | medium | 15 | 1 h 30 | `special_metal` x2 |
+| `vangelico.lua` | Vangelico jewelry | medium | 15 | 1 h 30 | `yellow_keycard` 55%, `special_metal` x2 |
+| `paleto.lua` | Paleto | large | 14 | 2 h | `silver_keycard` 40%, `special_metal` x4 |
+| `roxwood.lua` | Roxwood Bank | large | 14 | 2 h | `silver_keycard` 40%, `special_metal` x4 |
+| `pacificcity.lua` | Pacific City | large | 16 | 2 h | `gold_keycard` 40%, `special_metal` x5 |
+| `pacificroxwood.lua` | Pacific Roxwood | large | 16 | 2 h | `gold_keycard` 40%, `special_metal` x5 |
+| `mazebank.lua` | Maze Bank | large | 20 | 2 h | `platinum_keycard` 35%, `special_metal` x6 |
+
+Two things fall out of that table. The keycard chance drops as the tier rises, from 60 percent at medium down to 35 percent at Maze Bank, so the better the card, the more runs it costs to see one. And `special_metal` pays on every location at 100 percent, scaling by tier, which makes it the steady income a crew can count on while the keycards stay a gamble.
+
+The three locations with no "all loot taken" state, the ATM, boosting and the supermarket, pay their bonus on the final step of the job instead of on a sweep. It is still exactly once per run.
+
+`pawnshop.lua` is not a heist. It is the fence, the Diamond Box, where a crew turns what it took into money, so it carries no `minCops` or `Cooldown` of its own.
+
 ### Maze Bank
 
 `shared/config/mazebank.lua` is the largest location and the only one built around a party. It runs in two halves:
