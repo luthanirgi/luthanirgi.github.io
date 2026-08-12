@@ -120,6 +120,8 @@ Using the kit opens the browser of all forty games. One use is granted per use o
 
 A kit handed out with no metadata counts as full and shows no bar until its first launch. Give it as `AddItem(src, 'minigame_kit', 1, { durability = 100 })` if you want the bar full from the start.
 
+The item is wired through ox_inventory's `server.export` hook, which this resource publishes as `useKit`. That is why the kit needs `consume = 0` in its item definition: without it the use goes to the framework's usable-item registry and the export is never called.
+
 ox_inventory is optional. Without it the kit has no way to be used and the staff command still works, so the resource starts either way.
 
 ## Commands

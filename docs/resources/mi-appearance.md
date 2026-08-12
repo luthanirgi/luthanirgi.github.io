@@ -113,3 +113,47 @@ mi-appearance publishes one player statebag so the server and other resources ca
 | `miShop` | player | Set to the shop type (`clothing`, `barber`, `tattoo`, or `surgeon`) when the player enters a shop, cleared to `nil` on leave. The server sets it, it is not trusted from the client. | mi-appearance server (prices a save by the shop the player is in); any resource wanting to know a player is customizing |
 
 See the [state reference](../mi_core/reference/state.md) for the core statebags and GlobalState.
+
+## Ped exports
+
+These keep the **illenium-appearance export names**, so mi-appearance is a drop-in replacement: a resource already written against illenium-appearance keeps working without an edit.
+
+Every one takes an optional ped as its first argument. Pass `0` or omit it and it acts on the local player, which is what you want almost every time.
+
+### Readers
+
+| Export | Returns |
+|---|---|
+| `getPedModel(ped)` | the ped's model |
+| `getPedComponents(ped)` | every clothing component |
+| `getPedProps(ped)` | every prop (hats, glasses, ears, watches) |
+| `getPedHair(ped)` | hair style and colours |
+| `getPedHeadBlend(ped)` | the parent and skin blend |
+| `getPedFaceFeatures(ped)` | the face sliders |
+| `getPedHeadOverlays(ped)` | overlays: beard, makeup, blemishes, ageing |
+| `getPedAppearance(ped)` | all of the above in one table |
+
+### Writers
+
+| Export | Sets |
+|---|---|
+| `setPedComponent(ped, component)` | one clothing component |
+| `setPedComponents(ped, components)` | a list of them in one call |
+| `setPedProp(ped, prop)` | one prop |
+| `setPedProps(ped, props)` | a list of props |
+| `setPedHair(ped, hair)` | hair style and colours |
+| `setPedHeadBlend(ped, headBlend)` | the parent and skin blend |
+| `setPedFaceFeatures(ped, features)` | the face sliders |
+| `setPedHeadOverlays(ped, overlays)` | the overlays |
+| `setPedEyeColor(ped, index)` | eye colour |
+| `setPedTattoos(ped, tattoos)` | the tattoo collection |
+| `setPedAppearance(ped, appearance)` | everything above from one table |
+| `setPlayerModel(model)` / `addPedModel(model)` | the player's model |
+| `setPlayerAppearance(appearance)` | a full saved look on the local player |
+
+`setPlayerAppearance` snapshots health and armour around the model swap and restores them afterwards, deliberately without healing a downed ped, so applying a saved look never quietly revives someone.
+
+```lua
+local look = exports['mi-appearance']:getPedAppearance()
+exports['mi-appearance']:setPedAppearance(0, look)
+```

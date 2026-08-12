@@ -82,6 +82,8 @@ Hospital and bed locations live in the `locations` table in `shared/config/share
 
 Server-side unless noted. This is the qbx_medical / qbx_ambulancejob surface other resources call.
 
+A client-side compatibility layer republishes the older qbx_medical names too (`AllowRespawn`, `DisableRespawn`, `StartLastStand`, `IncrementLaststandTime` and the rest, including the explicitly deprecated `GetRespawnHoldTimeDeprecated`). They exist so resources written against qbx_medical keep working; write new code against the exports below instead.
+
 | Export | Signature | What it does |
 | --- | --- | --- |
 | IsDead | `IsDead(src)` | True if the player is downed or dead (server) |

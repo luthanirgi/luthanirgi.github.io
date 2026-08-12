@@ -94,3 +94,37 @@ The bundled `client/freecam/` camera library also registers the standard freecam
 | `/manageproperty` | group.admin | Opens the property and apartment management dashboard. |
 | `/setpropertygarage [property_id]` | everyone (property owner) | Sets that property's garage access point at your current position (run outside, optionally seated in a vehicle). |
 | `/convertbcshousing` | server console only | One-off importer that reads the bcs_housing tables (`house`, `house_owned`) and writes them into the mi-housing tables. |
+
+## Freecam exports
+
+Furniture placement runs on a freecam that mi-housing ships as a client module, and it is exported so you can drive it yourself or retune its feel without touching the resource.
+
+### Camera state
+
+| Export | Does |
+|---|---|
+| `IsActive()` / `SetActive(bool)` | read or toggle the freecam |
+| `IsFrozen()` / `SetFrozen(bool)` | freeze input while leaving the camera up |
+| `GetFov()` / `SetFov(fov)` | field of view |
+| `GetPosition()` / `SetPosition(...)` | camera position |
+| `GetRotation()` / `SetRotation(...)` | full rotation vector |
+| `GetPitch()` `GetRoll()` `GetYaw()` | one axis at a time, read off the rotation |
+| `GetMatrix()` | the camera matrix |
+| `GetTarget()` | what the camera is pointed at |
+
+### Retuning controls and feel
+
+Four key-value stores sit behind get/set pairs, so rebinding a key or changing a sensitivity is one call and needs no rebuild:
+
+| Export pair | Store |
+|---|---|
+| `GetKeyboardControl(key)` / `SetKeyboardControl(key, value)` | keyboard key mapping |
+| `GetGamepadControl(key)` / `SetGamepadControl(key, value)` | gamepad button mapping |
+| `GetKeyboardSetting(key)` / `SetKeyboardSetting(key, value)` | keyboard sensitivity and speed |
+| `GetGamepadSetting(key)` / `SetGamepadSetting(key, value)` | gamepad sensitivity and speed |
+| `GetCameraSetting(key)` / `SetCameraSetting(key, value)` | camera behaviour (fov limits, smoothing) |
+
+```lua
+exports['mi-housing']:SetCameraSetting('fov', 60.0)
+exports['mi-housing']:SetKeyboardSetting('speedMultiplier', 2.0)
+```

@@ -128,6 +128,10 @@ Whether a round costs a kit is decided server side, never by the client, so firi
 
 A kit handed out with no metadata counts as full and shows no bar until its first round. Give it as `AddItem(src, 'coop_minigame_kit', 1, { durability = 100 })` if you want the bar full from the start.
 
+The item is wired through ox_inventory's `server.export` hook, which this resource publishes as `useKit`. That is why the kit needs `consume = 0` in its item definition: without it the use goes to the framework's usable-item registry and the export is never called.
+
+`GetSessionBudgetMs(game, difficulty)` is exported alongside it, returning how long a session of that game and tier is allowed to run, so a caller can show its own countdown without duplicating the tier table.
+
 ox_inventory is optional. Without it the kit has no way to be used and the staff command still works, so the resource starts either way.
 
 ## Commands

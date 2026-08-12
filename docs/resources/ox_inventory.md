@@ -157,6 +157,56 @@ The rest of the data files are stock ox and keep their upstream shape:
 
 Resources in the mi suite that add their own items ship a paste-in fragment at `<resource>/setup/ox-items.lua`. Paste those entries into `data/items.lua` and drop the matching PNGs into `web/images/`.
 
+## Exports
+
+Every export below is stock ox_inventory and keeps its upstream signature, so [the upstream documentation](https://overextended.dev/ox_inventory) applies as written and any resource already built against ox_inventory works here unchanged. This is the map of what exists, grouped by what you reach for it for.
+
+### Server
+
+| Group | Exports |
+|---|---|
+| Items | `AddItem` `RemoveItem` `SetItem` `GetItem` `GetItemCount` `Search` `ConvertItems` |
+| Carry checks | `CanCarryItem` `CanCarryAmount` `CanCarryWeight` `CanSwapItem` |
+| Slots | `GetSlot` `GetEmptySlot` `GetItemSlots` `GetSlotForItem` `GetSlotWithItem` `GetSlotsWithItem` `GetSlotIdWithItem` `GetSlotIdsWithItem` `SwapSlots` `SetSlotCount` |
+| Metadata | `SetMetadata` `SetDurability` |
+| Inventories | `GetInventory` `GetInventoryItems` `InspectInventory` `ClearInventory` `RemoveInventory` `ConfiscateInventory` `ReturnInventory` `SetMaxWeight` `setPlayerInventory` `forceOpenInventory` |
+| Stashes, shops, crafting | `RegisterStash` `RegisterShop` `RegisterCraftStation` `CreateTemporaryStash` |
+| Drops | `CustomDrop` `CreateDropFromPlayer` |
+| Containers | `GetContainerFromSlot` |
+| Weapons and vehicles | `GetCurrentWeapon` `UpdateVehicle` |
+| Data tables | `Items` `ItemList` `Inventory` |
+| Hooks | `registerHook` `removeHooks` |
+| PEFCL bridge | `addCash` `getCash` `removeCash` `getBank` `getCards` `giveCard` |
+
+Two of those are worth a warning. `GetContainerFromSlot` calls `Inventory.Create` without an items argument, so on a container that is not currently loaded it creates an **empty** one, which can render blank and then overwrite the real contents on save. And `SetMetadata` **replaces the whole table**, so read the existing metadata, change what you need, and write it back, or unrelated keys are wiped.
+
+### Client
+
+| Group | Exports |
+|---|---|
+| Opening and closing | `openInventory` `closeInventory` `openNearbyInventory` `weaponWheel` |
+| Using items | `useItem` `useSlot` `giveItemToTarget` `getCurrentWeapon` |
+| Reading your own inventory | `GetPlayerItems` `GetPlayerWeight` `GetPlayerMaxWeight` `GetItemCount` `Search` `GetSlotWithItem` `GetSlotsWithItem` `GetSlotIdWithItem` `Items` `ItemList` |
+| Targets and containers | `setStashTarget` `setContainerProperties` `displayMetadata` |
+| UI helpers | `Progress` `ProgressActive` `CancelProgress` `Keyboard` `notify` |
+
+## Commands
+
+| Command | Does |
+|---|---|
+| `/steal` | pickpocket the player you are aiming at |
+| `/convertinventory` | one-off migration from another inventory resource |
+| `/clearActiveIdentifier` | clear a stuck active identifier |
+| `/viewinv` | open another inventory to inspect it |
+| `/takeinv` | take from an inventory |
+| `/saveinv` | force a save of open inventories |
+| `/clearinv` | empty an inventory |
+| `/setitem` | set an item count on a player |
+| `/removeitem` | remove an item from a player |
+| `/clearevidence` | clear a locker's evidence |
+
+The seven admin commands are stock ox and permission gated; `/steal` is the only one a player uses.
+
 ## Rebuilding the web UI
 
 Only needed if you change the React source, not for recolouring:

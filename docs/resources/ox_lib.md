@@ -60,6 +60,51 @@ print(theme.primary)     --> '#c0392b' when the convar is obsidian_rouge
 
 It returns the table for whatever `mi:lib_palette` is set to, falling back to `obsidian_rouge` if the convar names a preset that does not exist.
 
+## Exports added on top of stock ox_lib
+
+The library API (`lib.callback`, `lib.points`, `lib.zones`, `lib.progressBar`, `lib.notify`, `lib.registerContext`, `lib.locale` and the rest) is unchanged, so [the upstream documentation](https://overextended.dev/ox_lib) applies as written. What this build adds is a handful of plain exports.
+
+**Shared scratch state**, server-authoritative and mirrored to clients:
+
+```lua
+exports.ox_lib:setState('heist_active', true)     -- server
+local v = exports.ox_lib:getState('heist_active')  -- server or client
+```
+
+The server holds the table and pushes changes down; on the client, `getState()` with no key returns the whole table rather than one entry. Clearing a key server-side fires `ox_lib:state:remove`.
+
+**Per-source secure data**, a server-only table keyed by player source, for anything you do not want on a statebag:
+
+```lua
+exports.ox_lib:setSecurePlayer(src, data)
+local data = exports.ox_lib:getSecurePlayer(src)
+```
+
+**Withdrawal callback registry**, client side, with `GlobalState.withdrawal_cb` and `GlobalState.processingWithdrawal` as the shared flags:
+
+```lua
+exports.ox_lib:setWithdrawal(key, value)
+exports.ox_lib:getWithdrawal(key)      -- omit the key for the whole table
+exports.ox_lib:resetWithdrawal(key)    -- omit the key to clear all of them
+```
+
+**Locale lookup** for resources that want a translated string without pulling in the whole locale module:
+
+```lua
+exports.ox_lib:getLocale('some_key')
+```
+
+## Commands
+
+| Command | Does |
+|---|---|
+| `/ox_lib` | library info |
+| `/zone` | zone debug drawing |
+| `/cancelprogress` | cancel the active progress bar |
+| `/savepersistence` | force a persistence save instead of waiting for the interval |
+| `/persiststatus` | report what persistence currently holds |
+| `/persistdebug` | verbose persistence logging |
+
 ## Rebuilding the web UI
 
 Only needed if you change the React source, not for recolouring:

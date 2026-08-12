@@ -174,12 +174,18 @@ All are server exports, called as `exports['mi-robbery']:Name(...)`. They are th
 | LogRobberyFinish | `LogRobberyFinish(heistName, src, message)` | Logs a heist finish. |
 | LogPawnshopSale | `LogPawnshopSale(src, item, amount, label, payout)` | Logs a fence sale. |
 | LogPawnshopBuy | `LogPawnshopBuy(src, item, amount, label, cost)` | Logs a pawnshop purchase. |
+| CanResetHeist | `CanResetHeist(name)` | Whether that heist's reset is allowed right now, the gate the reset commands go through. |
+| GiveCompletionBonus | `GiveCompletionBonus(src, heistName)` | Rolls that heist's `CompletionBonus` list and grants what it hits. Exactly once per run. |
 
 ## Commands
 
 | Command | Access | Does |
 | --- | --- | --- |
 | `/clearrobberies` | group.admin | Force-clears all active robbery slots (admin recovery). |
+| `/scenetest` | developer | Plays a heist scene where you stand, for lining up animations while building a location. |
+| `/monyplatedebug` | developer | Previews the Bobcat money-plate animation with its bag prop. |
+| `/thermitedebug` | developer | Previews the cash-exchange thermite charge animation. |
+| `/tutpart1` | developer | Previews the laundromat fingerprint-scanner scene. |
 | `/resetfleeca [i]`, `/resetpaleto`, `/resetroxwood`, `/resetpacificcity`, `/resetpacificroxwood`, `/resetvang`, `/resetmazebank`, `/resetcontainer`, `/resetcashex`, `/resetbobcat`, `/resetlaundro`, `/resetallsupermarket` | police job | Resets that heist's props and active state so it can be run again (some take a location index argument). |
 
 ## Statebags
