@@ -59,6 +59,64 @@ A backpack item shows as a summary card in the left column while it is closed. O
 
 One limitation worth knowing before you build around it: ox opens one secondary inventory at a time, so an open backpack and an open trunk are mutually exclusive. You cannot have both grids on screen at once.
 
+## Rarity
+
+Items carry a `rarity` on their definition, and the slot is tinted to match it, in the grid, the hotbar, the tooltip, the crafting rows and the pickup notification.
+
+```lua
+['gold_bar'] = {
+    label = 'Gold Bar',
+    weight = 1000,
+    rarity = 'mythic',
+},
+```
+
+Six tiers ship, and anything unrecognised falls back to the common grey:
+
+| `rarity` | Tint |
+|---|---|
+| `common` | grey (also the fallback) |
+| `uncommon` | green |
+| `rare` | blue |
+| `epic` | purple |
+| `mythic` | yellow |
+| `special` | red |
+
+A single stack can outrank its own definition. The server resolves rarity as the stack's metadata first, then the item definition, so putting `rarity` in an item's metadata makes that one instance render at a different tier while every other copy stays as defined:
+
+```lua
+exports.ox_inventory:AddItem(source, 'gold_bar', 1, { rarity = 'special' })
+```
+
+That is what makes one-off event drops, rigged rewards and unique quest items read differently in the grid without needing their own item entry.
+
+## Item metadata
+
+Metadata is per stack, so two copies of the same item can carry different values. Some of it is filled in for you when the item is created, no matter which path created it, including crafting.
+
+**Serial numbers.** Give a definition `serial = true` and every copy is minted with its own serial the moment it is created, unless the creating call already supplied one:
+
+```lua
+['pistol_ammo_box'] = {
+    label = 'Ammo Box',
+    weight = 500,
+    stack = false,
+    serial = true,      -- unique serial minted on creation
+},
+```
+
+Craft it, buy it, or hand it out with `AddItem` and it comes out traceable. Throwable weapons are the one exception: their serial is stripped when the inventory loads, since a thrown item does not survive to be traced.
+
+**Durability.** An item with a durability or `degrade` value gets one applied at creation and re-checked every time the inventory loads. Expired durability is zeroed rather than left as a stale number, which is what makes timed items like documents and medical supplies expire on their own.
+
+**Image URLs.** If a stack carries an `imageurl`, it is validated before it is stored. Valid and invalid URLs are both reported to Discord as an embed, and an invalid one is dropped instead of being saved, so a bad link cannot break a slot render.
+
+**Containers.** A legacy `bag` key is converted to `container` on load and given a size from the container registry, so older saved data keeps working.
+
+**Weapon data.** Attachment `components` are checked against the item list on load and anything unknown is removed, and a `specialAmmo` that is not a string is dropped. Weapon metadata cannot rot into an unloadable state.
+
+Everything above happens server side, so a client cannot forge a serial, a rarity or a durability by sending its own metadata.
+
 ## Theming
 
 Colours come from `data/mi_theme.lua` and are pushed to the NUI at runtime, so recolouring never needs a web rebuild. Pick a preset with a convar in `server.cfg`:
