@@ -1,6 +1,6 @@
 # mi-poker
 
-Server-authoritative Texas Hold'em poker built for scale. Players sit at casino tables through ox_target, buy in with a chip item, and play hands that are dealt and resolved entirely on the server, with a configurable rake skimmed to a society account.
+Server-authoritative Texas Hold'em poker built for scale. Players sit at casino tables through ox_target, buy in with a chip item, and play hands that are dealt and resolved entirely on the server, with a configurable rake booked into mi-billing's ledger.
 
 ## Install
 
@@ -18,7 +18,7 @@ The gameplay knobs are in `shared/config` (`init.lua`):
 
 ```lua
 chipItem    = 'chip',          -- ox_inventory currency item
-society     = 'hotel',         -- rake destination (qbx society)
+society     = 'hotel',         -- rake destination; the job written into mi-billing's ledger
 taxRate     = 0.07,            -- rake skimmed from each pot
 maxDistance = 5.0,             -- must stay within this of the table or auto-leave
 targetDistance = 2.5,          -- ox_target interaction distance

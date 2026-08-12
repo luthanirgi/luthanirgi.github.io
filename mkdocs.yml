@@ -134,9 +134,13 @@ nav:
           - mi-locker: resources/mi-locker.md
           - mi-contracts: resources/mi-contracts.md
           - mi-gacha: resources/mi-gacha.md
-          - mi-poker: resources/mi-poker.md
           - mi-racingsystem: resources/mi-racingsystem.md
           - mi-redeem: resources/mi-redeem.md
+      - Table games:
+          - mi-poker: resources/mi-poker.md
+          - mi-capsa: resources/mi-capsa.md
+          - mi-gapleh: resources/mi-gapleh.md
+          - mi-mahjong: resources/mi-mahjong.md
       - Jobs and world:
           - mi-policejob: resources/mi-policejob.md
           - mi-ambulancejob: resources/mi-ambulancejob.md

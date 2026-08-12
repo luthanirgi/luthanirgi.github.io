@@ -52,9 +52,17 @@ The three ox resources the suite is built on, kept open source under their upstr
 * [mi-locker](mi-locker.md) rentable stashes
 * [mi-contracts](mi-contracts.md) contracts and missions
 * [mi-gacha](mi-gacha.md) gacha showroom
-* [mi-poker](mi-poker.md) poker
 * [mi-racingsystem](mi-racingsystem.md) racing system
 * [mi-redeem](mi-redeem.md) redeem codes
+
+## Table games
+
+Four server-authoritative games at world tables. They share a shape: seats through ox_target, a chip item to buy in, a rake booked into mi-billing, and a base-game table prop so nothing depends on a streamed addon the buyer may not have.
+
+* [mi-poker](mi-poker.md) Texas Hold'em
+* [mi-capsa](mi-capsa.md) Capsa, Big Two
+* [mi-gapleh](mi-gapleh.md) gaple, Indonesian dominoes
+* [mi-mahjong](mi-mahjong.md) riichi mahjong
 
 ## Jobs and world
 
