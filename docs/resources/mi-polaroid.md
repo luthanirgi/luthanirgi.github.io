@@ -125,3 +125,42 @@ The command name comes from `camera.cardCommand`.
 ## Database
 
 One table, `mi_polaroid_photos`. A row is a URL, an owner, an optional album, a caption, and whether it has been developed, so a server with a hundred thousand photos still holds only a hundred thousand short rows.
+
+## Photo expiry
+
+`shared/config/expiry.lua` throws photos out once the image host has already dropped them. FiveManage keeps an upload for roughly a month; past that the URL answers with nothing, so the photo is a blank frame occupying a slot and a database row.
+
+```lua
+enabled = true,
+days    = 30,               -- match your host's retention
+on      = 'both',           -- 'album' | 'connect' | 'both'
+loadedEvent = 'QBCore:Server:PlayerLoaded',
+cooldown = 300000,          -- ms; a player is swept at most this often
+notify  = true,             -- tell the player what went missing
+```
+
+`on` decides when the sweep runs. `album` costs one indexed query the moment a player opens an album or their camera roll. `connect` does it as they load in, using `loadedEvent`, which both qbx_core and qb-core fire, and nothing breaks if it never arrives. `both` is fine, because `cooldown` stops a second sweep from re-running the same query seconds later.
+
+## Migrating from dx_camera
+
+`shared/config/legacy.lua` covers the resource mi-polaroid replaces, in two independent parts.
+
+**Metadata mirroring.** A printed photo also carries dx_camera's `metadata.photo = { img, date, msg }` block, so anything already reading that keeps finding the image. Turn it off once nothing does.
+
+```lua
+mirrorMetadata = true,
+dateFormat     = '%Y/%m/%d',   -- how metadata.photo.date is written
+```
+
+**One-way import.** dx_camera kept one row per character with every photo in a JSON array. The first time that character opens an album here, those photos are copied across.
+
+```lua
+import = {
+    enabled          = true,
+    table            = 'dx_camera',
+    identifierColumn = 'identifier',   -- holds the citizenid, or the license
+    imagesColumn     = 'images',       -- JSON array of { date, img }
+},
+```
+
+The old table is only ever read, never written or dropped, so rolling back to dx_camera stays possible after the import.
