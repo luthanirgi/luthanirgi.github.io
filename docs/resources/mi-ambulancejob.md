@@ -8,6 +8,8 @@ mi-ambulancejob is the EMS job plus the death and last-stand engine and the Reac
 ensure mi-ambulancejob
 ```
 
+Depends on ox_lib, ox_inventory and ox_target.
+
 Dependencies (ox_lib, ox_inventory, ox_target) are standard. The resource keeps no tables of its own, so there is no SQL to import. Because it provides qbx_ambulancejob and qbx_medical, do not also run those.
 
 ## Config

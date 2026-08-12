@@ -8,6 +8,8 @@ mi-crutch gives EMS a crutch and a wheelchair to assign to injured players. A me
 ensure mi-crutch
 ```
 
+Depends on ox_lib and ox_inventory.
+
 ## Config
 
 The settings live in `shared/config/init.lua`. The HUD palette lives in `shared/config/palettes.lua` (pick one of five presets).

@@ -8,6 +8,8 @@ Server-authoritative Texas Hold'em poker built for scale. Players sit at casino 
 ensure mi-poker
 ```
 
+Depends on ox_lib, ox_inventory, ox_target and oxmysql.
+
 It creates its `mi_poker_players` table automatically on first boot, no manual SQL import.
 
 ## Config

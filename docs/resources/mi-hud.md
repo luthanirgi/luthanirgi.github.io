@@ -8,6 +8,8 @@ Player HUD with status bars (health, armour, hunger, thirst, stress, stamina, vo
 ensure mi-hud
 ```
 
+Depends on ox_lib and qbx_core or mi_core.
+
 ## Config
 
 The display settings live in `shared/config/hud.lua`. Colours are in `shared/config/colors.lua`, and the stress, compass, NOS, seatbelt, and blips modules sit beside it. Command names and the settings-menu keybind are in `shared/config/init.lua` (`Config.Commands`, `Config.Keybind`).

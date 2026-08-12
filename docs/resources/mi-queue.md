@@ -8,6 +8,8 @@ Priority connection queue that replaces FiveM's hardcap: waiters are held on the
 ensure mi-queue
 ```
 
+Depends on ox_lib and oxmysql.
+
 Requires OneSync enabled. Import `sql/mi-queue.sql` once (it creates the donation-code tables used by Tebex redemption).
 
 ## Config

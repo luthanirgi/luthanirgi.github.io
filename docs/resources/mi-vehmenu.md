@@ -8,6 +8,8 @@ An in-vehicle React console for controlling the car you are sitting in: doors, w
 ensure mi-vehmenu
 ```
 
+Depends on ox_lib.
+
 ## Config
 
 `shared/config/init.lua` is the config aggregator:

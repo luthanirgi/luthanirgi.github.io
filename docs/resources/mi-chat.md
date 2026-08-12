@@ -8,6 +8,8 @@ mi-chat replaces the default FiveM text chat with a React NUI that shows message
 ensure mi-chat
 ```
 
+Depends on ox_lib.
+
 ## Config
 
 The scalar settings live in `shared/config/init.lua`. Channels, job styles, and the command list live in their own files (`shared/config/channels.lua`, `jobs.lua`, `commands.lua`), and the UI palette in `shared/config/colors.lua` (pick one of five presets).

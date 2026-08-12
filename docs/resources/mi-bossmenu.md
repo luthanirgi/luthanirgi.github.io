@@ -8,6 +8,8 @@ A boss menu for jobs and gangs with a React UI, plus persistent on-duty totals. 
 ensure mi-bossmenu
 ```
 
+Depends on ox_lib, ox_inventory, ox_target, oxmysql and qbx_core or mi_core.
+
 It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import.
 
 Player, job and gang data come from the core through the framework bridge (`shared/config/bridge.lua`, `exports.qbx_core` by default). Prompts use `ox_target`; the paycheck uses `ox_inventory`. OneSync must be on.

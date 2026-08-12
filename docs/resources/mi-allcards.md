@@ -8,6 +8,8 @@ mi-allcards is an identity and documents system with a React wallet. It issues I
 ensure mi-allcards
 ```
 
+Depends on ox_lib, ox_inventory, oxmysql and qbx_core or mi_core.
+
 Dependencies (oxmysql, ox_lib, mi_core, ox_inventory) are standard; `/onesync` is a server policy, not a resource to ensure. It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import.
 
 ## Config

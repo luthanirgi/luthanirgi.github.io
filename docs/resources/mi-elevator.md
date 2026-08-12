@@ -8,6 +8,8 @@ mi-elevator turns fixed map points into multi-floor lifts opened through ox_targ
 ensure mi-elevator
 ```
 
+Depends on ox_lib, ox_inventory, ox_target and qbx_core or mi_core.
+
 ## Config
 
 General settings live in `shared/config/settings.lua`:

@@ -8,6 +8,8 @@ A vehicle customs shop with a React NUI. A player sitting in a vehicle inside a 
 ensure mi-customsgarage
 ```
 
+Depends on ox_lib.
+
 ## Config
 
 `shared/config/settings.lua` holds the owner-editable tunables. Shop zones live in `locations.lua`, the modification tree in `catalog.lua`, and the palette in `theme.lua` (set `SELECTED` to one of the five presets or provide a `custom` table).

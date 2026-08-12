@@ -8,6 +8,8 @@ Racing system with a React tablet UI: track creation, scheduled and manual compe
 ensure mi-racingsystem
 ```
 
+Depends on ox_lib, oxmysql and qbx_core or mi_core.
+
 Requires OneSync enabled. It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

@@ -8,6 +8,8 @@ A vehicle dealership with a React NUI. Players browse a showroom, test drive, an
 ensure mi-dealership
 ```
 
+Depends on ox_lib, oxmysql and qbx_core or mi_core.
+
 It ships `server/migrate.lua`, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

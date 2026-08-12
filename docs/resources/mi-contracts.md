@@ -8,6 +8,8 @@ mi-contracts is a React NUI tablet for a contracts and jobs marketplace. Operato
 ensure mi-contracts
 ```
 
+Depends on ox_lib, ox_inventory, oxmysql and qbx_core or mi_core.
+
 It ships `server/migrate.lua`, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

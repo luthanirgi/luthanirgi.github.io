@@ -8,6 +8,8 @@ Rentable, premium (Tebex), and subscriber lockers backed by personal ox_inventor
 ensure mi-locker
 ```
 
+Depends on ox_lib, ox_inventory, ox_target and oxmysql.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

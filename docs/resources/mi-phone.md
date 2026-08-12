@@ -10,6 +10,8 @@ Underneath the apps sits a phone OS: a battery that drains whether the phone is 
 ensure mi-phone
 ```
 
+Depends on ox_lib, ox_inventory and qbx_core or mi_core.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import. The Gallery and Snapix camera is optional and needs the `screenshot-basic` resource; the phone runs fine without it, the camera just hides.
 
 ## Config

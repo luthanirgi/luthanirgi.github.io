@@ -10,6 +10,8 @@ Resources written for `qb-vehiclekeys`, `qbx-vehiclekeys`, `qbx_vehiclekeys`, `w
 ensure mi-keys
 ```
 
+Depends on ox_lib, ox_inventory and qbx_core or mi_core.
+
 Needs `ox_lib`, `ox_inventory`, and `qbx_core` (or mi_core), OneSync, game build 2372 or newer, and asset packs enabled. The bundled key audio (`dlc_vehiclekeys`) loads from the manifest, nothing to import.
 
 ## Config

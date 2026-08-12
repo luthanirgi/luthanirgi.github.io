@@ -8,6 +8,8 @@ mi-clothing is a quick clothing toggle menu shown as a side rail. It lets a play
 ensure mi-clothing
 ```
 
+Depends on ox_lib.
+
 ## Config
 
 The general settings live in `shared/config/init.lua`. The per-model slot definitions (which drawable and texture count as "off" for each ped model) live in `shared/config/clothing.lua`, and the UI palette in `shared/config/colors.lua` (pick one of five presets).

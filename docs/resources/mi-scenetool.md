@@ -10,6 +10,8 @@ This is a tool for whoever builds your map and your jobs, not a player-facing re
 ensure mi-scenetool
 ```
 
+Depends on ox_lib.
+
 Only ox_lib is needed. There is no database, no inventory item, and no NUI the player ever sees.
 
 ## Config

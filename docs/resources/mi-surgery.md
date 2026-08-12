@@ -8,6 +8,8 @@ Medics use ox_target on a patient to run hospital procedures: diagnostics (MRI, 
 ensure mi-surgery
 ```
 
+Depends on ox_lib, ox_inventory and ox_target.
+
 ## Config
 
 `shared/config/settings.lua` holds the behaviour (server-owner editable, no rebuild needed):

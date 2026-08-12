@@ -25,6 +25,8 @@ Six seats need a wide screen. On a laptop, open it fullscreen or drop the party 
 ensure mi_coopminigames
 ```
 
+Depends on ox_lib.
+
 Only ox_lib is needed. There is no database and nothing to import.
 
 [mi_coopdemo](mi_coopdemo.md) is a worked integration you can start next to it: four floor stations, a lobby, and one export call.

@@ -8,6 +8,8 @@ Black-market organ harvesting and transplants. A downed or restrained victim can
 ensure mi-organs
 ```
 
+Depends on ox_lib, ox_inventory and ox_target.
+
 State lives in player metadata, so there are no database tables to import.
 
 ## Config

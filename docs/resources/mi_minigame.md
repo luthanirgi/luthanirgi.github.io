@@ -21,6 +21,8 @@ Keyboard games want the click first, since that is what hands the keys to the de
 ensure mi_minigame
 ```
 
+Depends on ox_lib.
+
 Only ox_lib is needed. No database, no items, nothing to import.
 
 ## Using it

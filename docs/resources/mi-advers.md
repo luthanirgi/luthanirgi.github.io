@@ -8,6 +8,8 @@ mi-advers is a digital signage system. It manages world billboards (static image
 ensure mi-advers
 ```
 
+Depends on ox_lib, ox_target, oxmysql and qbx_core or mi_core.
+
 All dependencies (ox_lib, ox_target, oxmysql, qbx_core) are standard. It ships server/migrate.lua, so its tables auto-create on first boot, no manual SQL import.
 
 ## Config

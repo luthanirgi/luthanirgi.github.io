@@ -8,6 +8,8 @@ A pma-voice radio system with a React handheld-device NUI. Channels can be gated
 ensure mi-radio
 ```
 
+Depends on ox_lib, ox_inventory, pma-voice and qbx_core or mi_core.
+
 Requires pma-voice (ensure it first) and OneSync enabled.
 
 ## Config

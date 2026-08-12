@@ -8,7 +8,7 @@ A Cover-Flow case-opening (gacha) resource with a React showroom NUI. Players sp
 ensure mi-gacha
 ```
 
-Depends on ox_lib, ox_inventory, and ox_target. It uses no database (state is in memory), so nothing to import. The credits, coupon, and key items must exist in ox_inventory; a definition template ships in `setup/ox-items.lua`.
+Depends on ox_lib, ox_inventory, ox_target, and oxmysql. It ships no tables of its own, so there is nothing to import; its own state is in memory, and vehicle rewards are written straight into `player_vehicles`. The credits, coupon, and key items must exist in ox_inventory; a definition template ships in `setup/ox-items.lua`.
 
 ## Config
 

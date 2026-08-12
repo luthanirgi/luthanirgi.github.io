@@ -10,6 +10,8 @@ It displays carried weapons on the player model, with a concealed-carry toggle a
 ensure mi-holster
 ```
 
+Depends on ox_lib, ox_inventory and qbx_core or mi_core.
+
 Needs `ox_lib`, `ox_inventory`, and `qbx_core` (or mi_core), plus OneSync.
 
 ## Config

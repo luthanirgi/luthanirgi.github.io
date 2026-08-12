@@ -8,6 +8,8 @@ A React spawn selector shown when a character loads. The player picks a city, jo
 ensure mi-spawnselector
 ```
 
+Depends on ox_lib and qbx_core or mi_core.
+
 It declares `provide 'qbx_spawn'`, so run it in place of qbx_spawn (do not run both).
 
 ## Config

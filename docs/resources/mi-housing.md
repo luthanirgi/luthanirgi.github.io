@@ -8,6 +8,8 @@ Property and apartment system with shells, IPL and MLO interiors, furniture, gar
 ensure mi-housing
 ```
 
+Depends on ox_lib, ox_inventory and oxmysql.
+
 ## Config
 
 Owner settings are split across `shared/config/*.lua`. The main switches, the real-estate jobs, and the CCTV settings are shown below. Property definitions (`houses.lua`) and the furniture catalog (`furniture.lua`) are large data tables, edited in place.

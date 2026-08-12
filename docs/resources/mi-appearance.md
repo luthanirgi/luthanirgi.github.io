@@ -8,6 +8,8 @@ mi-appearance is a character appearance editor, export-compatible with illenium-
 ensure mi-appearance
 ```
 
+Depends on ox_lib, ox_target, oxmysql and qbx_core or mi_core.
+
 Dependencies (ox_lib, oxmysql, mi_core, ox_target) are standard. It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import. It registers the illenium-appearance export names, so resources that call `exports['illenium-appearance']:*` keep working.
 
 ## Config

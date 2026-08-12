@@ -8,6 +8,8 @@ Duty unit tracker for service jobs. It draws job-scoped world blips (who can see
 ensure mi-gps
 ```
 
+Depends on ox_lib and qbx_core or mi_core. It has no database of its own, so there is nothing to import.
+
 ## Config
 
 Owner settings live in `shared/config/init.lua`; the jobs list is in `shared/config/jobs.lua`. Config uses the module-return pattern (consumers do `local Config = require 'shared.config'`). The per-vehicle-class sprite map (`Config.Sprite`) is internal data and is omitted here.

@@ -8,6 +8,8 @@ An injury and damage system with a React EMR dossier NUI. It registers wounds pe
 ensure mi-damages
 ```
 
+Depends on ox_lib, ox_inventory and ox_target.
+
 ## Config
 
 `shared/config/init.lua` holds the tunables below. The weapon-to-wound mapping lives in `weapons.lua`, the framework and medical bridge in `bridge.lua` (repoint `core` / `medical` to run a different core), and the palette in `colors.lua` (pick one of the five presets). Player-facing copy lives in `locales/*.json` (set the language with `setr ox:locale <code>`).

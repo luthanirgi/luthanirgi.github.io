@@ -8,6 +8,8 @@ A React NUI marketplace pawn shop. Players sell items to and buy them back from 
 ensure mi-pawnshop
 ```
 
+Depends on ox_lib, ox_inventory, oxmysql and qbx_core or mi_core.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

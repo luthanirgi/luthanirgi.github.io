@@ -8,6 +8,8 @@ A redeem-code system with a React admin dashboard. Players redeem a code with `/
 ensure mi-redeem
 ```
 
+Depends on ox_lib, ox_inventory, oxmysql and qbx_core or mi_core.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

@@ -8,6 +8,8 @@ All-in-one police suite in a single resource: forensic evidence and GSR, restrai
 ensure mi-policejob
 ```
 
+Depends on ox_lib, ox_inventory, ox_target, screenshot-basic and qbx_core or mi_core.
+
 Requires OneSync enabled. Ensure `screenshot-basic` first (field-camera photo upload). This resource adds no database table.
 
 ## Config

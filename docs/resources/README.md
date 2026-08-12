@@ -4,6 +4,14 @@ The resources that run on top of [mi_core](../mi_core/README.md). Each has its o
 
 Every resource assumes mi_core is already running. Load them after it in `server.cfg`.
 
+## Foundation
+
+The three ox resources the suite is built on, kept open source under their upstream licences. The plumbing is stock ox; the presentation is themed by the same palette system as the rest of the suite.
+
+* [ox_lib](ox_lib.md) shared library and themed NUI, load it first
+* [ox_inventory](ox_inventory.md) slot inventory, Framed Cards layout, async crafting
+* [ox_target](ox_target.md) targeting with a themed reticle and options panel
+
 ## Interface
 
 * [mi-hud](mi-hud.md) speedometer, status, minimap, and info HUD

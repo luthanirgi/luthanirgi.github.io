@@ -8,6 +8,8 @@ A billing tablet with a React UI. Company staff send bills to citizens, citizens
 ensure mi-billing
 ```
 
+Depends on ox_lib, oxmysql and qbx_core or mi_core.
+
 It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import.
 
 Player and money data come from the core through the framework bridge (`shared/config/bridge.lua`, `exports.qbx_core` by default). OneSync must be on.

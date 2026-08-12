@@ -8,6 +8,8 @@ A unified robbery and heist system covering bank and jewelry heists (Fleeca, Pal
 ensure mi-robbery
 ```
 
+Depends on ox_lib and ox_inventory.
+
 No database: active-heist state lives in GlobalState, so there is nothing to import. Hard dependencies are ox_lib and ox_inventory only. Everything else is optional and wired through config (a dispatch resource, ox_doorlock or qb-doorlock, a vehicle-keys resource, [mi_minigame](mi_minigame.md) for the skill checks, and [mi_coopminigames](mi_coopminigames.md) for the Maze Bank co-op stages).
 
 ## Config

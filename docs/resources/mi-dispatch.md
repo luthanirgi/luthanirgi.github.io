@@ -8,6 +8,8 @@ A dispatch / CAD system with a Patrol HUD and a Command Center console (React NU
 ensure mi-dispatch
 ```
 
+Depends on ox_lib, oxmysql and qbx_core or mi_core.
+
 ## Config
 
 `shared/config/` splits into several files. `general.lua` holds the core settings below. `groups.lua` defines the job groups that share a call feed and the dispatcher permissions; `controls.lua` holds the keybinds, the console command, and the player service-call commands; `alerts.lua` defines the automatic alerts and their cooldowns; `apiKeys.lua` holds the FiveManage token and Discord webhook (both blank by default, fill them in yourself); `theme/palettes.lua` holds the colors. Two small weapon tables sit beside them: `weapons.lua` maps a weapon hash to the label shown in a shots-fired alert (an unlisted weapon just shows no label), and `blacklistedWeapons.lua` lists the non-lethal and throwable weapons that never raise an alert at all.

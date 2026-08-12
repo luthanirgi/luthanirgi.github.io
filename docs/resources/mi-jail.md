@@ -8,6 +8,8 @@ Prison system with jail, PD lockup, and community service, run from a React Ward
 ensure mi-jail
 ```
 
+Depends on ox_lib, ox_inventory, ox_target, oxmysql and qbx_core or mi_core.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

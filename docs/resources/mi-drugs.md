@@ -8,6 +8,8 @@ mi-drugs is a Schedule I style drug operation: grow plants, process them at plac
 ensure mi-drugs
 ```
 
+Depends on ox_lib, ox_inventory, ox_target, oxmysql and qbx_core or mi_core.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config

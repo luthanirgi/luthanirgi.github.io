@@ -8,6 +8,8 @@ A multi-character selection screen with a React UI, a camera scene over a posed 
 ensure mi-characters
 ```
 
+Depends on ox_lib, oxmysql and qbx_core or mi_core.
+
 It stores no tables of its own and ships no SQL. Character records come from the core through the framework bridge (`shared/config/bridge.lua`, `exports.qbx_core` by default); the preview reads the core's `players` and `playerskins` rows.
 
 ## Config

@@ -8,6 +8,8 @@ A city government layer: citizen taxation (wealth, vehicle, property), per-job f
 ensure mi-government
 ```
 
+Depends on ox_lib, oxmysql and qbx_core or mi_core.
+
 Needs OneSync enabled. Tax bills, subsidies, and the treasury total go through mi-billing, so ensure mi-billing is running too. It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import.
 
 ## Config

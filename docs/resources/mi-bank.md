@@ -8,6 +8,8 @@ A bank with a React UI. Players deposit, withdraw and transfer money, see recent
 ensure mi-bank
 ```
 
+Depends on ox_lib.
+
 It ships `server/migrate.lua`, so its tables auto-create on first boot, no manual SQL import.
 
 Money and player data come from the core through the framework bridge (`shared/config/bridge.lua`, `exports.qbx_core` by default). Bank and ATM prompts use `ox_target`.

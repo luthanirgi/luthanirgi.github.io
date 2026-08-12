@@ -8,6 +8,8 @@ Players spray 3D world text scenes using a sprayer item and clear them with a sp
 ensure mi-scenes
 ```
 
+Depends on ox_lib, ox_inventory, oxmysql and qbx_core or mi_core.
+
 It ships server/migrate.lua, so tables auto-create on first boot, no manual SQL import.
 
 ## Config
